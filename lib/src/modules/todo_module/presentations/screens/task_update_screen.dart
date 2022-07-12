@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -14,12 +13,13 @@ import '../../applications/models/task_bloc_models/task_update_bloc_model.dart';
 import '../../configs/widget_key/widget_key_config.dart';
 import '../widgets/bottom_menu_bar_widget.dart';
 
-class TaskUpdateScreenWidget extends StatelessWidget {
-  TaskUpdateScreenWidget({required ImagePickerUtil imagePickerUtil, Key? key})
+class TaskUpdateScreen extends StatelessWidget {
+  TaskUpdateScreen({required ImagePickerUtil imagePickerUtil, Key? key})
       : _imagePickerUtil = imagePickerUtil,
         super(key: key);
 
   final TaskBloc _bloc = Modular.get<TaskBloc>();
+  final IModularNavigator _modular = Modular.get<IModularNavigator>();
   final TextEditingController editTitleController = TextEditingController();
   final ImagePickerUtil _imagePickerUtil;
 
@@ -83,7 +83,7 @@ class TaskUpdateScreenWidget extends StatelessWidget {
           content: Text(AppLocalizations.of(context).successSnackBar),
         ),
       );
-      Modular.to.pushNamed(initialRoute);
+      _modular.pushNamed(initialRoute);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -107,7 +107,7 @@ class TaskUpdateScreenWidget extends StatelessWidget {
             return BlocConsumer<TaskBloc, TaskState>(
               listener: (BuildContext context, TaskState state) {
                 if (state is TaskUpdateState &&
-                    state.status == taskStatusState.success) {
+                    state.status == TaskStatusState.success) {
                   _navigateToListTasksScreen(context);
                 }
               },
@@ -169,7 +169,7 @@ class TaskUpdateScreenWidget extends StatelessWidget {
           },
         ),
       ),
-      bottomNavigationBar: const BottomMenuBarWidget(
+      bottomNavigationBar: BottomMenuBarWidget(
         currentTabIndex: 2,
       ),
     );

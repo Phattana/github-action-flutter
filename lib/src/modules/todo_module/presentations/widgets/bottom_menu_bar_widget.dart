@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -5,30 +6,39 @@ import '../../../../configs/l10n/app_localizations.dart';
 import '../../../../configs/routes/route_config.dart';
 
 class BottomMenuBarWidget extends StatelessWidget {
-  const BottomMenuBarWidget({required int currentTabIndex, Key? key})
+  BottomMenuBarWidget({required int currentTabIndex, Key? key})
       : _currentTabIndex = currentTabIndex,
         super(key: key);
 
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+
   final int _currentTabIndex;
+  final IModularNavigator _modular = Modular.get<IModularNavigator>();
 
   void _navigateToScreen(int newTabIndex) {
     try {
       switch (newTabIndex) {
         case 0:
-          Modular.to.pushNamed(createTaskRoute);
+          _modular.pushNamed(createTaskRoute);
+          analytics.logEvent(name: 'navigate_create');
           break;
         case 1:
-          Modular.to.pushNamed(initialRoute);
+          _modular.pushNamed(initialRoute);
+          analytics.logEvent(name: 'navigate_edit');
           break;
         case 2:
-          Modular.to.pushNamed(updateTaskRoute);
+          _modular.pushNamed(updateTaskRoute);
+          analytics.logEvent(name: 'navigate_edit');
+          break;
+        case 3:
+          _modular.pushNamed(getTaskGrpcRoute);
           break;
         default:
-          Modular.to.pushNamed(notFoundRoute);
+          _modular.pushNamed(notFoundRoute);
           break;
       }
     } catch (e) {
-      Modular.to.pushNamed(notFoundRoute);
+      _modular.pushNamed(notFoundRoute);
     }
   }
 
@@ -48,8 +58,13 @@ class BottomMenuBarWidget extends StatelessWidget {
           label: AppLocalizations.of(context).updateBottomMenu,
           icon: const Icon(Icons.update),
         ),
+        BottomNavigationBarItem(
+          label: AppLocalizations.of(context).grpcBottomMenu,
+          icon: const Icon(Icons.update),
+        ),
       ],
       selectedItemColor: Colors.blue,
+      unselectedItemColor: Colors.grey,
       currentIndex: _currentTabIndex,
       onTap: (int newTabIndex) => _navigateToScreen(newTabIndex),
     );

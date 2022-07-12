@@ -14,14 +14,15 @@ import '../../configs/widget_key/widget_key_config.dart';
 import '../../services/commons/request_query.dart';
 import '../widgets/bottom_menu_bar_widget.dart';
 
-class TaskGetScreenWidget extends StatelessWidget {
-  TaskGetScreenWidget({Key? key}) : super(key: key);
+class TaskGetScreen extends StatelessWidget {
+  TaskGetScreen({Key? key}) : super(key: key);
 
   final TaskBloc _bloc = Modular.get<TaskBloc>();
+  final IModularNavigator _modular = Modular.get<IModularNavigator>();
 
   Widget _taskList(BuildContext context, TaskState state) {
     try {
-      if (state is TaskGetState && state.status == taskStatusState.success) {
+      if (state is TaskGetState && state.status == TaskStatusState.success) {
         if (state.data == null || state.data!.isEmpty) {
           return Center(
             key: const Key(dataEmptyTaskGetWidgetKey),
@@ -163,25 +164,25 @@ class TaskGetScreenWidget extends StatelessWidget {
         );
       } else if (state is TaskInitialState ||
           (state is TaskUpdateState &&
-              state.status == taskStatusState.success) ||
+              state.status == TaskStatusState.success) ||
           (state is TaskDeleteState &&
-              state.status == taskStatusState.success) ||
+              state.status == TaskStatusState.success) ||
           (state is TaskCreateState &&
-              state.status == taskStatusState.success)) {
+              state.status == TaskStatusState.success)) {
         _getListTask(context);
         return Center(
           key: const Key(loadDataTaskGetWidgetKey),
           child: Text(AppLocalizations.of(context).loadDataTaskGet),
         );
       } else if ((state is TaskUpdateState &&
-              (state.status != taskStatusState.failure &&
-                  state.status != taskStatusState.success)) ||
+              (state.status != TaskStatusState.failure &&
+                  state.status != TaskStatusState.success)) ||
           state is TaskDeleteState &&
-              (state.status != taskStatusState.failure &&
-                  state.status != taskStatusState.success) ||
+              (state.status != TaskStatusState.failure &&
+                  state.status != TaskStatusState.success) ||
           state is TaskCreateState &&
-              (state.status != taskStatusState.failure &&
-                  state.status != taskStatusState.success)) {
+              (state.status != TaskStatusState.failure &&
+                  state.status != TaskStatusState.success)) {
         return Center(
           key: const Key(loadDataTaskGetWidgetKey),
           child: Text(AppLocalizations.of(context).loadDataTaskGet),
@@ -300,12 +301,12 @@ class TaskGetScreenWidget extends StatelessWidget {
               },
               listener: (BuildContext context, TaskState state) {
                 if (state is TaskUpdateState && state.data != null) {
-                  Modular.to.pushNamed(updateTaskRoute);
+                  _modular.pushNamed(updateTaskRoute);
                 } else if (state is TaskDeleteState &&
-                    state.status == taskStatusState.success) {
+                    state.status == TaskStatusState.success) {
                   _getListTask(context);
                 } else if (state is TaskUpdateState &&
-                    state.status == taskStatusState.success) {
+                    state.status == TaskStatusState.success) {
                   _getListTask(context);
                 }
               },
@@ -313,7 +314,7 @@ class TaskGetScreenWidget extends StatelessWidget {
           },
         ),
       ),
-      bottomNavigationBar: const BottomMenuBarWidget(
+      bottomNavigationBar: BottomMenuBarWidget(
         currentTabIndex: 1,
       ),
     );

@@ -6,6 +6,8 @@ import 'domains/entities/task_delete_entity.dart';
 import 'domains/entities/task_get_entity.dart';
 import 'domains/entities/task_update_entity.dart';
 import 'domains/repositories/task_repository.dart';
+import 'services/datasources/api_datasource.dart';
+import 'services/datasources/grpc_datasource.dart';
 import 'services/models/task_create_datasource_model.dart';
 import 'services/models/task_delete_datasource_model.dart';
 import 'services/models/task_get_datasource_model.dart';
@@ -25,7 +27,7 @@ class TaskImplRepository implements TaskRepository {
   }) async {
     try {
       final TaskCreateResponseDataSourceModel response =
-          await _dataSource.create(
+          await (_dataSource as ApiDataSource).create(
         task: TaskCreateRequestDataSourceModel(
           title: task.title,
           imageUrl: task.imageUrl,
@@ -42,7 +44,7 @@ class TaskImplRepository implements TaskRepository {
     } catch (e) {
       throw RepositoryError(
         message: e.toString(),
-        code: appErrorCodes.unknownError,
+        code: AppErrorCodes.unknownError,
       );
     }
   }
@@ -53,7 +55,12 @@ class TaskImplRepository implements TaskRepository {
   }) async {
     try {
       final List<TaskGetResponseDataSourceModel>? response =
-          await _dataSource.get(
+          await ((_dataSource is ApiDataSource)
+                  ? _dataSource as ApiDataSource
+                  : _dataSource is GprcDataSource
+                      ? _dataSource as GprcDataSource
+                      : _dataSource as ApiDataSource)
+              .get(
         query: TaskGetRequestDataSourceModel(
           sortBy: query.sortBy,
           orderBy: query.orderBy,
@@ -74,7 +81,7 @@ class TaskImplRepository implements TaskRepository {
     } catch (e) {
       throw RepositoryError(
         message: e.toString(),
-        code: appErrorCodes.unknownError,
+        code: AppErrorCodes.unknownError,
       );
     }
   }
@@ -87,13 +94,13 @@ class TaskImplRepository implements TaskRepository {
       final TaskDeleteQueryParamsRequestDataSourceModel queryParam =
           TaskDeleteQueryParamsRequestDataSourceModel(id: queryParams.id);
 
-      await _dataSource.delete(
+      await (_dataSource as ApiDataSource).delete(
         queryParams: queryParam,
       );
     } catch (e) {
       throw RepositoryError(
         message: e.toString(),
-        code: appErrorCodes.unknownError,
+        code: AppErrorCodes.unknownError,
       );
     }
   }
@@ -115,7 +122,7 @@ class TaskImplRepository implements TaskRepository {
           TaskUpdateQueryParamsRequestDataSourceModel(id: queryParams.id);
 
       final TaskUpdateResponseDataSourceModel response =
-          await _dataSource.update(
+          await (_dataSource as ApiDataSource).update(
         task: body,
         queryParams: queryParam,
       );
@@ -130,8 +137,9 @@ class TaskImplRepository implements TaskRepository {
     } catch (e) {
       throw RepositoryError(
         message: e.toString(),
-        code: appErrorCodes.unknownError,
+        code: AppErrorCodes.unknownError,
       );
     }
   }
+
 }

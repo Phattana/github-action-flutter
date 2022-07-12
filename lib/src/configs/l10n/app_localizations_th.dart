@@ -23,6 +23,9 @@ class AppLocalizationsTh extends AppLocalizations {
   String get updateBottomMenu => 'แก้ไขงาน';
 
   @override
+  String get grpcBottomMenu => 'gRPC';
+
+  @override
   String get updateTaskAppBar => 'แก้ไขงาน';
 
   @override

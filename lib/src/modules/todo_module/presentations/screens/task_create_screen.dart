@@ -10,13 +10,14 @@ import '../../applications/models/task_bloc_models/task_create_bloc_model.dart';
 import '../../configs/widget_key/widget_key_config.dart';
 import '../widgets/bottom_menu_bar_widget.dart';
 
-class TaskCreateScreenWidget extends StatelessWidget {
-  TaskCreateScreenWidget({required ImagePickerUtil imagePickerUtil, Key? key})
+class TaskCreateScreen extends StatelessWidget {
+  TaskCreateScreen({required ImagePickerUtil imagePickerUtil, Key? key})
       : _imagePickerUtil = imagePickerUtil,
         super(key: key);
 
   final ImagePickerUtil _imagePickerUtil;
   final TaskBloc _bloc = Modular.get<TaskBloc>();
+  final IModularNavigator _modular = Modular.get<IModularNavigator>();
   final TextEditingController _titleTextController = TextEditingController();
 
   Future<void> _selectImage(BuildContext context) async {
@@ -54,7 +55,7 @@ class TaskCreateScreenWidget extends StatelessWidget {
         ),
       );
 
-      Modular.to.pushNamed(initialRoute);
+      _modular.pushNamed(initialRoute);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -79,10 +80,10 @@ class TaskCreateScreenWidget extends StatelessWidget {
             return BlocConsumer<TaskBloc, TaskState>(
               listener: (BuildContext context, TaskState state) {
                 if (state is TaskCreateState &&
-                    state.status == taskStatusState.success) {
+                    state.status == TaskStatusState.success) {
                   _navigateToListTasksScreenWidget(context);
                 } else if (state is TaskCreateState &&
-                    state.status == taskStatusState.failure) {
+                    state.status == TaskStatusState.failure) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       key: const Key(snackBarSuccessWidgetKey),
@@ -123,7 +124,7 @@ class TaskCreateScreenWidget extends StatelessWidget {
           },
         ),
       ),
-      bottomNavigationBar: const BottomMenuBarWidget(
+      bottomNavigationBar: BottomMenuBarWidget(
         currentTabIndex: 0,
       ),
     );

@@ -4,12 +4,12 @@ import '../../../../utils/error_code/error_code_util.dart';
 class FieldRequiredException implements AppException {
   const FieldRequiredException({
     required String message,
-    required appErrorCodes code,
+    required AppErrorCodes code,
   })  : _message = message,
         _code = code;
 
   final String _message;
-  final appErrorCodes _code;
+  final AppErrorCodes _code;
 
   static const String exceptionContext = 'Exception required field:';
 
@@ -17,7 +17,7 @@ class FieldRequiredException implements AppException {
   String get message => _message;
 
   @override
-  appErrorCodes get code => _code;
+  AppErrorCodes get code => _code;
 
   @override
   String toString() => '$exceptionContext code: $_code $_message is required';
@@ -26,12 +26,12 @@ class FieldRequiredException implements AppException {
 class FieldValidationException implements AppException {
   const FieldValidationException({
     required String message,
-    required appErrorCodes code,
+    required AppErrorCodes code,
   })  : _message = message,
         _code = code;
 
   final String _message;
-  final appErrorCodes _code;
+  final AppErrorCodes _code;
 
   static const String exceptionContext = 'Exception validation field:';
 
@@ -39,7 +39,7 @@ class FieldValidationException implements AppException {
   String get message => _message;
 
   @override
-  appErrorCodes get code => _code;
+  AppErrorCodes get code => _code;
 
   @override
   String toString() => '$exceptionContext code: $_code $_message is empty';

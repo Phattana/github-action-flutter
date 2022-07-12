@@ -25,12 +25,12 @@ class TaskImplUseCase implements TaskUseCase {
       if (task.title.isEmpty) {
         throw const FieldValidationException(
           message: requiredTitleMessage,
-          code: appErrorCodes.missingRequiredFields,
+          code: AppErrorCodes.missingRequiredFields,
         );
       } else if (task.imageUrl.isEmpty) {
         throw const FieldValidationException(
           message: requiredImageUrlMessage,
-          code: appErrorCodes.missingRequiredFields,
+          code: AppErrorCodes.missingRequiredFields,
         );
       }
 
@@ -38,7 +38,7 @@ class TaskImplUseCase implements TaskUseCase {
     } catch (e) {
       throw TaskCreateUseCaseError(
         message: e.toString(),
-        code: appErrorCodes.unknownError,
+        code: AppErrorCodes.unknownError,
       );
     }
   }
@@ -52,7 +52,7 @@ class TaskImplUseCase implements TaskUseCase {
     } catch (e) {
       throw TaskGetUseCaseError(
         message: e.toString(),
-        code: appErrorCodes.unknownError,
+        code: AppErrorCodes.unknownError,
       );
     }
   }
@@ -66,14 +66,14 @@ class TaskImplUseCase implements TaskUseCase {
       if (queryParams.id.isEmpty) {
         throw const FieldRequiredException(
           message: requiredIdMessage,
-          code: appErrorCodes.missingRequiredFields,
+          code: AppErrorCodes.missingRequiredFields,
         );
       } else if ((task.title == null || task.title!.isEmpty) &&
           task.isDone == null &&
           (task.imageUrl == null || task.imageUrl!.isEmpty)) {
         throw const FieldValidationException(
           message: requiredAtLeastOneMessage,
-          code: appErrorCodes.missingRequiredFields,
+          code: AppErrorCodes.missingRequiredFields,
         );
       }
       return await _repository.update(queryParams: queryParams, task: task);
@@ -90,10 +90,9 @@ class TaskImplUseCase implements TaskUseCase {
       if (queryParams.id.isEmpty) {
         throw const FieldRequiredException(
           message: requiredIdMessage,
-          code: appErrorCodes.missingRequiredFields,
+          code: AppErrorCodes.missingRequiredFields,
         );
       }
-
       await _repository.delete(queryParams: queryParams);
     } catch (e) {
       throw TaskDeleteUseCaseError(message: e.toString());

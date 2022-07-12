@@ -24,28 +24,20 @@ part 'task_state.dart';
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
   TaskBloc({required TaskImplUseCase usecase})
       : _usecase = usecase,
-        super(TaskInitialState());
+        super(TaskInitialState()) {
+    on<TaskGotEvent>(_mapTaskGotEventToState);
+    on<TaskCreatedEvent>(_mapTaskCreatedEventToState);
+    on<TaskUpdatedEvent>(_mapTaskUpdatedEventToState);
+    on<TaskSelectedToUpdatedEvent>(_mapTaskSelectedToUpdateEventToState);
+    on<TaskDeletedEvent>(_mapTaskDeletedEventToState);
+  }
 
   final TaskImplUseCase _usecase;
 
-  @override
-  Stream<TaskState> mapEventToState(TaskEvent event) async* {
-    if (event is TaskGotEvent) {
-      yield* _mapTaskGotEventToState(event: event);
-    } else if (event is TaskCreatedEvent) {
-      yield* _mapTaskCreatedEventToState(event: event);
-    } else if (event is TaskUpdatedEvent) {
-      yield* _mapTaskUpdatedEventToState(event: event);
-    } else if (event is TaskSelectedToUpdatedEvent) {
-      yield* _mapTaskSelectedToUpdateEventToState(event: event);
-    } else if (event is TaskDeletedEvent) {
-      yield* _mapTaskDeletedEventToState(event: event);
-    }
-  }
-
-  Stream<TaskState> _mapTaskCreatedEventToState({
-    required TaskCreatedEvent event,
-  }) async* {
+  Future<void> _mapTaskCreatedEventToState(
+    TaskCreatedEvent event,
+    Emitter<TaskState> emit,
+  ) async {
     try {
       await _usecase.create(
         task: TaskCreateRequestEntity(
@@ -54,24 +46,29 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         ),
       );
 
-      yield const TaskCreateState(status: taskStatusState.success);
+      emit(const TaskCreateState(status: TaskStatusState.success));
     } catch (e) {
-      yield TaskCreateState(
-        error: e is AppError
-            ? ErrorBlocModel(message: e.message, code: e.code)
-            : null,
-        exception: e is AppException
-            ? ExceptionBlocModel(message: e.message, code: e.code)
-            : null,
-        status: taskStatusState.failure,
+      emit(
+        TaskCreateState(
+          error: e is AppError
+              ? ErrorBlocModel(message: e.message, code: e.code)
+              : null,
+          exception: e is AppException
+              ? ExceptionBlocModel(message: e.message, code: e.code)
+              : null,
+          status: TaskStatusState.failure,
+        ),
       );
     }
   }
 
-  Stream<TaskState> _mapTaskGotEventToState({
-    required TaskGotEvent event,
-  }) async* {
+  Future<void> _mapTaskGotEventToState(
+    TaskGotEvent event,
+    Emitter<TaskState> emit,
+  ) async {
     try {
+      emit(TaskLoadingState());
+
       final List<TaskGetResponseEntity>? responseUseCase = await _usecase.get(
         query: TaskGetRequestEntity(
           sortBy: event.model.sortBy,
@@ -92,41 +89,49 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
                   );
                 }).toList();
 
-      yield TaskGetState(
-        status: taskStatusState.success,
-        data: taskGetResponseBlocModel,
-        query: event.model,
+      emit(
+        TaskGetState(
+          status: TaskStatusState.success,
+          data: taskGetResponseBlocModel,
+          query: event.model,
+        ),
       );
     } catch (e) {
-      yield TaskGetState(
-        status: taskStatusState.failure,
-        query: event.model,
-        error: e is AppError
-            ? ErrorBlocModel(message: e.message, code: e.code)
-            : null,
-        exception: e is AppException
-            ? ExceptionBlocModel(message: e.message, code: e.code)
-            : null,
+      emit(
+        TaskGetState(
+          status: TaskStatusState.failure,
+          query: event.model,
+          error: e is AppError
+              ? ErrorBlocModel(message: e.message, code: e.code)
+              : null,
+          exception: e is AppException
+              ? ExceptionBlocModel(message: e.message, code: e.code)
+              : null,
+        ),
       );
     }
   }
 
-  Stream<TaskState> _mapTaskSelectedToUpdateEventToState({
-    required TaskSelectedToUpdatedEvent event,
-  }) async* {
-    yield TaskUpdateState(
-      data: TaskUpdateBlocModel(
-        id: event.model.id,
-        title: event.model.title,
-        isDone: event.model.isDone,
-        imageUrl: event.model.imageUrl,
+  Future<void> _mapTaskSelectedToUpdateEventToState(
+    TaskSelectedToUpdatedEvent event,
+    Emitter<TaskState> emit,
+  ) async {
+    emit(
+      TaskUpdateState(
+        data: TaskUpdateBlocModel(
+          id: event.model.id,
+          title: event.model.title,
+          isDone: event.model.isDone,
+          imageUrl: event.model.imageUrl,
+        ),
       ),
     );
   }
 
-  Stream<TaskState> _mapTaskUpdatedEventToState({
-    required TaskUpdatedEvent event,
-  }) async* {
+  Future<void> _mapTaskUpdatedEventToState(
+    TaskUpdatedEvent event,
+    Emitter<TaskState> emit,
+  ) async {
     try {
       final TaskUpdateBodyRequestEntity taskUpdateRequestEntity =
           TaskUpdateBodyRequestEntity(
@@ -146,25 +151,30 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         task: taskUpdateRequestEntity,
       );
 
-      yield const TaskUpdateState(
-        status: taskStatusState.success,
+      emit(
+        const TaskUpdateState(
+          status: TaskStatusState.success,
+        ),
       );
     } catch (e) {
-      yield TaskUpdateState(
-        status: taskStatusState.failure,
-        error: e is AppError
-            ? ErrorBlocModel(message: e.message, code: e.code)
-            : null,
-        exception: e is AppException
-            ? ExceptionBlocModel(message: e.message, code: e.code)
-            : null,
+      emit(
+        TaskUpdateState(
+          status: TaskStatusState.failure,
+          error: e is AppError
+              ? ErrorBlocModel(message: e.message, code: e.code)
+              : null,
+          exception: e is AppException
+              ? ExceptionBlocModel(message: e.message, code: e.code)
+              : null,
+        ),
       );
     }
   }
 
-  Stream<TaskState> _mapTaskDeletedEventToState({
-    required TaskDeletedEvent event,
-  }) async* {
+  Future<void> _mapTaskDeletedEventToState(
+    TaskDeletedEvent event,
+    Emitter<TaskState> emit,
+  ) async {
     try {
       final TaskDeleteQueryParamsRequestEntity
           taskDeleteQueryParamsRequestEntity =
@@ -176,18 +186,22 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         queryParams: taskDeleteQueryParamsRequestEntity,
       );
 
-      yield const TaskDeleteState(
-        status: taskStatusState.success,
+      emit(
+        const TaskDeleteState(
+          status: TaskStatusState.success,
+        ),
       );
     } catch (e) {
-      yield TaskDeleteState(
-        status: taskStatusState.failure,
-        error: e is AppError
-            ? ErrorBlocModel(message: e.message, code: e.code)
-            : null,
-        exception: e is AppException
-            ? ExceptionBlocModel(message: e.message, code: e.code)
-            : null,
+      emit(
+        TaskDeleteState(
+          status: TaskStatusState.failure,
+          error: e is AppError
+              ? ErrorBlocModel(message: e.message, code: e.code)
+              : null,
+          exception: e is AppException
+              ? ExceptionBlocModel(message: e.message, code: e.code)
+              : null,
+        ),
       );
     }
   }

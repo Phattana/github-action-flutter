@@ -4,6 +4,7 @@
   "createBottomMenu": "Create",
   "listBottomMenu": "List",
   "updateBottomMenu": "Update",
+  "grpcBottomMenu": "gRPC",
   "updateTaskAppBar": "Update Task",
   "saveUpdateTaskBtn": "Save",
   "noUpdateImage": "No Image",

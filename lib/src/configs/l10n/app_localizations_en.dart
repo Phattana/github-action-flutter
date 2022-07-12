@@ -23,6 +23,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get updateBottomMenu => 'Update';
 
   @override
+  String get grpcBottomMenu => 'gRPC';
+
+  @override
   String get updateTaskAppBar => 'Update Task';
 
   @override

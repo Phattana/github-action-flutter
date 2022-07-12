@@ -124,6 +124,12 @@ abstract class AppLocalizations {
   /// **'Update'**
   String get updateBottomMenu;
 
+  /// No description provided for @grpcBottomMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'gRPC'**
+  String get grpcBottomMenu;
+
   /// No description provided for @updateTaskAppBar.
   ///
   /// In en, this message translates to:

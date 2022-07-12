@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -5,14 +7,14 @@ import '../../../../commons/constants/api_constant.dart';
 import '../../../../commons/constants/env_constant.dart';
 import '../../../../utils/error_code/error_code_util.dart';
 import '../../commons/errors/datasource_error.dart';
-import '../../domains/datasources/datasource.dart';
+import '../../domains/datasources/future_datasource.dart';
 import '../commons/response_json_key.dart';
 import '../models/task_create_datasource_model.dart';
 import '../models/task_delete_datasource_model.dart';
 import '../models/task_get_datasource_model.dart';
 import '../models/task_update_datasource_model.dart';
 
-class ApiDataSource implements DataSource {
+class ApiDataSource implements FutureDataSource {
   ApiDataSource({required Dio http}) : _http = http;
 
   final Dio _http;
@@ -55,7 +57,7 @@ class ApiDataSource implements DataSource {
     } catch (e) {
       throw DataSourceError(
         message: e.toString(),
-        code: appErrorCodes.unknownError,
+        code: AppErrorCodes.unknownError,
       );
     }
   }
@@ -70,7 +72,8 @@ class ApiDataSource implements DataSource {
 ${dotenv.env[apiUrlEnv]}$taskResourceApi${TaskGetRequestDataSourceModel(sortBy: query.sortBy, orderBy: query.orderBy).toQueryString()}''',
       );
 
-      return (response.data[dataJsonKey] as List<Object>?)?.map((Object data) {
+      return (response.data[dataJsonKey] as List<dynamic>?)
+          ?.map((dynamic data) {
         return TaskGetResponseDataSourceModel.fromJson(
           data as Map<String, dynamic>,
         );
@@ -83,7 +86,7 @@ ${dotenv.env[apiUrlEnv]}$taskResourceApi${TaskGetRequestDataSourceModel(sortBy: 
     } catch (e) {
       throw DataSourceError(
         message: e.toString(),
-        code: appErrorCodes.unknownError,
+        code: AppErrorCodes.unknownError,
       );
     }
   }
@@ -115,7 +118,7 @@ ${dotenv.env[apiUrlEnv]}$taskResourceApi${TaskGetRequestDataSourceModel(sortBy: 
     } catch (e) {
       throw DataSourceError(
         message: e.toString(),
-        code: appErrorCodes.unknownError,
+        code: AppErrorCodes.unknownError,
       );
     }
   }
@@ -135,7 +138,7 @@ ${dotenv.env[apiUrlEnv]}$taskResourceApi${TaskGetRequestDataSourceModel(sortBy: 
     } catch (e) {
       throw DataSourceError(
         message: e.toString(),
-        code: appErrorCodes.unknownError,
+        code: AppErrorCodes.unknownError,
       );
     }
   }

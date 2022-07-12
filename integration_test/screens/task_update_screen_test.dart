@@ -28,7 +28,7 @@ void screenTest(
             imageUrl: '''
 iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=''',
           ),
-          status: taskStatusState.success,
+          status: TaskStatusState.success,
         ),
       );
 
@@ -42,7 +42,7 @@ iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAA
               imageUrl: '''
 iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=''',
             ),
-            status: taskStatusState.success,
+            status: TaskStatusState.success,
           ),
           const TaskUpdateState(
             data: TaskUpdateBlocModel(
@@ -52,14 +52,14 @@ iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAA
               imageUrl: '''
 iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=''',
             ),
-            status: taskStatusState.success,
+            status: TaskStatusState.success,
           ),
         ]),
       );
 
       await tester.pumpWidget(
         MaterialApp(
-          home: TaskUpdateScreenWidget(imagePickerUtil: mockImagePickerUtil),
+          home: TaskUpdateScreen(imagePickerUtil: mockImagePickerUtil),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),

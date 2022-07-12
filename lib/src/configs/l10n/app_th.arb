@@ -3,6 +3,7 @@
   "createBottomMenu": "สร้าง",
   "listBottomMenu": "รายการงาน",
   "updateBottomMenu": "แก้ไขงาน",
+  "grpcBottomMenu": "gRPC",
   "updateTaskAppBar": "แก้ไขงาน",
   "saveUpdateTaskBtn": "บันทึก",
   "noUpdateImage": "ไม่มีรูปภาพ",
