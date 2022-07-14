@@ -25,7 +25,7 @@ workflows:
       - name : flutter build ios
         script: cd ios
       - name : fast lane
-        script: fastlane setup
+        script: pwd | fastlane setup
 #      - name : flutter build ios --release
 #        script: flutter build ios integration_test/main_integration_test.dart --release
 #      - name : xcode build
