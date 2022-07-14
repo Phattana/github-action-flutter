@@ -24,8 +24,6 @@ workflows:
     scripts:
       - name : fastlane
         script: | 
-#          cd ios
-#          fastlane setup
           echo CM_BRANCH
           echo $CM_BRANCH
 #      - name : flutter build ios --release
