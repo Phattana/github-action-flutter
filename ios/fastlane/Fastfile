@@ -11,14 +11,14 @@ platform:ios do
     lane:setup do
 #         if is_ci
             # create keychain
-            sh("security create-keychain -p #{ENV['KEYCHAIN_PASSWORD']} ~/Library/Keychains/cicd.keychain-db")
-            sh("security unlock-keychain -p #{ENV['KEYCHAIN_PASSWORD']} ~/Library/Keychains/cicd.keychain-db")
+            sh("security create-keychain -p $KEYCHAIN_PASSWORD ~/Library/Keychains/cicd.keychain-db")
+            sh("security unlock-keychain -p $KEYCHAIN_PASSWORD ~/Library/Keychains/cicd.keychain-db")
             sh('security list-keychains -d user -s ~/Library/Keychains/cicd.keychain-db $(security list-keychains -d user | sed s/\"//g)')
             # import certificate
-            sh("security import ../distribution.p12 -P #{ENV['CERTIFICATE_PASSWORD']} -A -t cert -f pkcs12 -k ~/Library/Keychains/cicd.keychain-db")
-            sh("security import ../development.p12 -P #{ENV['CERTIFICATE_PASSWORD']} -A -t cert -f pkcs12 -k ~/Library/Keychains/cicd.keychain-db")
+            sh("security import ../distribution.p12 -P $CERTIFICATE_PASSWORD -A -t cert -f pkcs12 -k ~/Library/Keychains/cicd.keychain-db")
+            sh("security import ../development.p12 -P $CERTIFICATE_PASSWORD -A -t cert -f pkcs12 -k ~/Library/Keychains/cicd.keychain-db")
             # set allow codesign
-            sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k #{ENV['KEYCHAIN_PASSWORD']} ~/Library/Keychains/cicd.keychain-db")
+            sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $KEYCHAIN_PASSWORD ~/Library/Keychains/cicd.keychain-db")
             # copy provisioning profile
             sh('mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles')
 #         else
@@ -44,8 +44,8 @@ platform:ios do
         sh('cp ../Distribute_comhugemanflutterstarterkit.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles')
         sh('cp ../AdHoc_comhugemanflutterstarterkit.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles')
 
-        sh("echo #{ENV['BUILD_NUMBER']}")
-        sh("cd ../../; ls -la;export BUILD_NUMBER=#{ENV['BUILD_NUMBER']}; perl -i -pe 's/^(version:)((\\s+\\d+\\.\\d+\\.\\d+\\+)|(\\s+\\d+\\.\\d+\\.\\d+\\-\\w+\\+))(\\d+)$/$1.$2.$ENV{BUILD_NUMBER}/e' pubspec.yaml")
+        sh("echo $BUILD_NUMBER")
+        sh("cd ../../; ls -la;export BUILD_NUMBER=$BUILD_NUMBER; perl -i -pe 's/^(version:)((\\s+\\d+\\.\\d+\\.\\d+\\+)|(\\s+\\d+\\.\\d+\\.\\d+\\-\\w+\\+))(\\d+)$/$1.$2.$ENV{BUILD_NUMBER}/e' pubspec.yaml")
         sh("cd ../../; grep 'version:' pubspec.yaml")
 
         increment_build_number(
@@ -60,9 +60,9 @@ platform:ios do
             sh("pod install")
         end
 
-        sh("security unlock-keychain -p #{ENV['KEYCHAIN_PASSWORD']} ~/Library/Keychains/cicd.keychain-db")
+        sh("security unlock-keychain -p $KEYCHAIN_PASSWORD ~/Library/Keychains/cicd.keychain-db")
 #         if is_ci
-            sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k #{ENV['KEYCHAIN_PASSWORD']} ~/Library/Keychains/cicd.keychain-db")
+            sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $KEYCHAIN_PASSWORD ~/Library/Keychains/cicd.keychain-db")
 #         end
         # build file
         sh("flutter build ios --config-only integration_test/main_integration_test.dart")
