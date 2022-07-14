@@ -23,11 +23,13 @@ workflows:
       cancel_previous_builds: true
     scripts:
       - name : flutter build ios
-        script: flutter build ios --config-only integration_test/main_integration_test.dart
-      - name : flutter build ios --release
-        script: flutter build ios integration_test/main_integration_test.dart --release
-      - name : xcode build
-        script: xcodebuild -workspace ../Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath build/ios_integ -sdk iphoneos build-for-testing
-      - name : zip file
-        script: cd build/ios_integ/Build/Products/; zip -r ../../../../../ios_tests.zip .
+        script: cd iod
+      - name : fast lane
+        script: fastlane setup
+#      - name : flutter build ios --release
+#        script: flutter build ios integration_test/main_integration_test.dart --release
+#      - name : xcode build
+#        script: xcodebuild -workspace ../Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath build/ios_integ -sdk iphoneos build-for-testing
+#      - name : zip file
+#        script: cd build/ios_integ/Build/Products/; zip -r ../../../../../ios_tests.zip .
 
