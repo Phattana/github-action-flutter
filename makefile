@@ -6,6 +6,9 @@ project/init: project/cleanup git-hooks/setup project/install/package l10n/gener
 project/install/package:
 	flutter pub get; dart pub get
 
+prject/install/package/codemagic:
+	flutter pub get; $FLUTTER_ROOT/bin/dart pub get
+
 project/cleanup: analysis/cleanup
 	flutter clean
 
