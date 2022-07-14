@@ -22,10 +22,10 @@ workflows:
           source: true
       cancel_previous_builds: true
     scripts:
-      - name : flutter build ios
-        script: cd ios
-      - name : fast lane
-        script: pwd
+      - name : fastlane
+        script: | 
+          cd ios
+          fastlane setup
 #      - name : flutter build ios --release
 #        script: flutter build ios integration_test/main_integration_test.dart --release
 #      - name : xcode build
