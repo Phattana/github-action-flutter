@@ -7,7 +7,7 @@ project/install/package:
 	flutter pub get; dart pub get
 
 prject/install/package/codemagic:
-	flutter pub get; $FLUTTER_ROOT/bin/dart pub get
+	flutter pub get; FLUTTER_ROOT/bin/dart pub get
 
 project/cleanup: analysis/cleanup
 	flutter clean
