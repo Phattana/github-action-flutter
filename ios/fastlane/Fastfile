@@ -192,18 +192,18 @@ platform:ios do
             key_id: ENV["APP_STORE_CONNECT_AUTH_KEY_ID"],
             issuer_id: ENV["APP_STORE_CONNECT_AUTH_ISSUER_ID"],
             key_filepath: "app_store_connect_key.p8",
-            duration: 1200, # optional (maximum 1200)
-                in_house: false
+            duration: 1200,
+            in_house: false
         )
 
-#         upload_to_app_store(
-#             username: ENV["APPLE_ID"],
-#             app_identifier: ENV["APP_BUNDLE_ID"],
-#             team_id: ENV["APPLE_TEAM_ID"],
-#             force: true,
-#             ipa: "Runner.ipa",
-#             precheck_include_in_app_purchases: false,
-#             api_key: api_key,
-#         )
+        upload_to_app_store(
+            username: ENV["APPLE_ID"],
+            app_identifier: ENV["APP_BUNDLE_ID"],
+            team_id: ENV["APPLE_TEAM_ID"],
+            force: true,
+            ipa: "Runner.ipa",
+            precheck_include_in_app_purchases: false,
+            api_key: api_key,
+        )
     end
 end
