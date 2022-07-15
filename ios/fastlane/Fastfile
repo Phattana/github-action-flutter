@@ -61,6 +61,7 @@ platform:ios do
         end
 
         sh("security unlock-keychain -p $KEYCHAIN_PASSWORD ~/Library/Keychains/cicd.keychain-db")
+        sh("echo $KEYCHAIN_PASSWORD")
 #         if is_ci
         sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $KEYCHAIN_PASSWORD ~/Library/Keychains/cicd.keychain-db")
 #         end
