@@ -70,6 +70,7 @@ workflows:
         script: make test/generate/mock-file
       - name : fastlane setup
         script : |
+          echo hello
           cd ios
           fastlane setup
       - name : fastlane test lab
