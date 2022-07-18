@@ -1,4 +1,4 @@
-# The Flutter Clean Architecture (v0.1.1-beta)
+# The Flutter Clean Architecture (v1.2.0-beta)
 
 This project intends to develop the PoC of Clean Architecture with Flutter SDK as well as add the mandatory packages for
 rapid Flutter development
@@ -10,7 +10,7 @@ rapid Flutter development
   - Firebase
     - Make sure you have firebase app and create group `developer`, `qa` and `user` in firebase app distribute
     - Android add file `google-services.json` in `/android/app/`
-    - iOS add file `GoogleService-Info.plist` into project see more
+    - iOS add file `GoogleService-Info.plist` into `/ios/` see more
       in https://firebase.flutter.dev/docs/installation/ios
     - Web update firebase config in file `/web/firebase-config-service.js`
   - Update value environment variable in ile `.env`, `.env-cicd`
@@ -33,6 +33,9 @@ rapid Flutter development
   - Not ARM Architect
     - Download API 25
     - Create AVD Nexus6 API 25
+- ios simulator
+    - Download ios 13.6
+    - use iPhone 7 
 - Chromedriver - https://chromedriver.chromium.org/downloads
 - Firebase CLI - https://firebase.google.com/docs/cli
 - lcov - https://github.com/linux-test-project/lcov
@@ -193,6 +196,11 @@ rapid Flutter development
                     ├── exceptions/
                         ├── usecase_exception.dart
                 ├── configs/
+                    ├── grpc/
+                        ├── task.bp.dart
+                        ├── task.pbenum.dart
+                        ├── task.bpgrpc.dart
+                        ├── task.pbjson.dart
                     ├── usecase_message/
                         ├── usecase_message_config.dart
                     ├── widget_key/
@@ -209,10 +217,12 @@ rapid Flutter development
                         ├── task_usecase.dart # abstarct
                     ├── datasources/
                         ├── datasource.dart # abstarct
+                        ├── future_datasource.dart # abstarct
                 ├── presentations/
                     ├── screens/
                         ├── not_found_screen.dart
                         ├── task_create_screen.dart
+                        ├── task_get_grpc_screen.dart
                         ├── task_get_screen.dart
                         ├── task_update_screen.dart
                     ├── widgets/
@@ -223,25 +233,37 @@ rapid Flutter development
                         ├── response_json_key.dart
                     ├── datasources/
                         ├── api_datasource.dart
+                        ├── grpc_datasource.dart
                     ├── models/
                         ├── task_create_datasource_model.dart
                         ├── task_get_datasource_model.dart
                         ├── task_delete_datasource_model.dart
                         ├── task_update_datasource_model.dart
-                    ├── repositories/
-                        ├── tassk_impl_repository.dart
+                ├── task_impl_repository.dart
                 ├── task_impl_usecase.dart
                 ├── todo_module.dart
             ├── app_module.dart
             ├── app_screen.dart
         ├── utils/
-            ├── error_code_util.dart
+            ├── error_code/        
+                ├── error_code_util.dart
+            ├── firebase/
+                ├── firebase_message_util.dart
+            ├── grpc/
+                ├── grpc_for_mobile_util.dart
+                ├── grpc_for_web_util.dart
+                ├── grpc_stub_util.dart
+                ├── grpc_util.dart    
             ├── image_picker
                 ├── image_picker_for_mobile_util.dart
                 ├── image_picker_for_web_util.dart
                 ├── image_picker_stub_util.dart
                 ├── image_picker_util.dart
+            ├── test_data/
+                ├── mock_test_data.dart
     ├── main.dart
+    ├── configure_nonweb.dart
+    ├── configure_web.dart
 ├── test/
     ├── src/
     ├── test_data/

@@ -31,3 +31,6 @@
 * Add a Update task feature to todo
 * Add a Get task feature to todo
 * Add a Deleted task feature to todo
+
+# 1.2.0-beta
+* Add grpc protocol to Get task in todo

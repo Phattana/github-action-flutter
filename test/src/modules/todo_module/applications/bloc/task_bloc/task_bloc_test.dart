@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_starter_kit/src/modules/todo_module/applications/bloc/task_bloc/task_bloc.dart';
 import 'package:flutter_starter_kit/src/modules/todo_module/applications/models/error_bloc_model.dart';
 import 'package:flutter_starter_kit/src/modules/todo_module/applications/models/exception_bloc_model.dart';
@@ -22,7 +23,12 @@ void main() {
   late TaskBloc expectTaskBloc;
 
   setUp(() {
+    dotenv.testLoad();
     expectTaskBloc = TaskBloc(usecase: mockTaskImplUseCase);
+  });
+
+  tearDown(() {
+    expectTaskBloc.close();
   });
 
   group('TaskBloc Class', () {
@@ -86,7 +92,7 @@ void main() {
               message: expectTaskFieldValidationExceptionTitleEmpty.message,
               code: expectTaskFieldValidationExceptionTitleEmpty.code,
             ),
-            status: taskStatusState.failure,
+            status: TaskStatusState.failure,
           ),
         ];
       },
@@ -121,7 +127,7 @@ void main() {
               message: expectTaskFieldValidationExceptionImageUrlEmpty.message,
               code: expectTaskFieldValidationExceptionImageUrlEmpty.code,
             ),
-            status: taskStatusState.failure,
+            status: TaskStatusState.failure,
           ),
         ];
       },
@@ -157,7 +163,7 @@ Should map TaskCreatedEvent to state - Failure case (throw error from usecase)''
               message: expectTaskCreateUseCaseError.message,
               code: expectTaskCreateUseCaseError.code,
             ),
-            status: taskStatusState.failure,
+            status: TaskStatusState.failure,
           ),
         ];
       },
@@ -184,6 +190,7 @@ Should map TaskCreatedEvent to state - Failure case (throw error from usecase)''
           bloc.add(TaskGotEvent(model: expectTaskGetRequestBlocModel)),
       expect: () {
         return <TaskState>[
+          expectTaskLoadingState,
           expectTaskGetStateSuccess,
         ];
       },
@@ -205,6 +212,7 @@ Should map TaskGotEvent to state - Failure case (throw error from usecase)''',
           bloc.add(TaskGotEvent(model: expectTaskGetRequestBlocModel)),
       expect: () {
         return <TaskState>[
+          expectTaskLoadingState,
           expectTaskGetStateError,
         ];
       },
@@ -242,7 +250,7 @@ Should map TaskGotEvent to state - Failure case (throw error from usecase)''',
       expect: () {
         return <TaskState>[
           const TaskUpdateState(
-            status: taskStatusState.success,
+            status: TaskStatusState.success,
           ),
         ];
       },
@@ -282,7 +290,7 @@ Should map TaskUpdatedEvent to state - Failure case (id is empty from usecase)''
               message: expectFieldRequiredExceptionId.message,
               code: expectFieldRequiredExceptionId.code,
             ),
-            status: taskStatusState.failure,
+            status: TaskStatusState.failure,
           ),
         ];
       },
@@ -321,7 +329,7 @@ Should map TaskUpdatedEvent to state - Failure case (title isDone imageUrl is em
               message: expectFieldValidationExceptionAtLeastOne.message,
               code: expectFieldValidationExceptionAtLeastOne.code,
             ),
-            status: taskStatusState.failure,
+            status: TaskStatusState.failure,
           ),
         ];
       },
@@ -363,7 +371,7 @@ Should map TaskUpdatedEvent to state - Failure case (throw error id is empty fro
               message: expectFieldRequiredExceptionId.message,
               code: expectFieldRequiredExceptionId.code,
             ),
-            status: taskStatusState.failure,
+            status: TaskStatusState.failure,
           ),
         ];
       },
@@ -412,7 +420,7 @@ Should map TaskUpdatedEvent to state - Failure case (throw error id is empty fro
       expect: () {
         return <TaskState>[
           const TaskDeleteState(
-            status: taskStatusState.success,
+            status: TaskStatusState.success,
           ),
         ];
       },
@@ -449,7 +457,7 @@ Should map TaskDeletedEvent to state - Failure case (id is empty from usecase)''
               message: expectFieldRequiredExceptionId.message,
               code: expectFieldRequiredExceptionId.code,
             ),
-            status: taskStatusState.failure,
+            status: TaskStatusState.failure,
           ),
         ];
       },
@@ -487,7 +495,7 @@ Should map TaskDeletedEvent to state - Failure case (throw error id is empty fro
               message: expectFieldValidationExceptionAtLeastOne.message,
               code: expectFieldValidationExceptionAtLeastOne.code,
             ),
-            status: taskStatusState.failure,
+            status: TaskStatusState.failure,
           ),
         ];
       },

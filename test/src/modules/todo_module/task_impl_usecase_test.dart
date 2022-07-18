@@ -104,7 +104,7 @@ void main() {
           expectTaskFieldValidationExceptionImageUrlEmpty =
           FieldValidationException(
         message: requiredImageUrlMessage,
-        code: appErrorCodes.missingRequiredFields,
+        code: AppErrorCodes.missingRequiredFields,
       );
 
       expect(

@@ -2,16 +2,17 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_starter_kit/src/configs/l10n/app_localizations.dart';
 import 'package:flutter_starter_kit/src/configs/routes/route_config.dart';
 import 'package:flutter_starter_kit/src/modules/todo_module/applications/bloc/task_bloc/task_bloc.dart';
 import 'package:flutter_starter_kit/src/modules/todo_module/configs/widget_key/widget_key_config.dart';
 import 'package:flutter_starter_kit/src/modules/todo_module/presentations/screens/task_update_screen.dart';
 import 'package:flutter_starter_kit/src/modules/todo_module/todo_module.dart';
+import 'package:flutter_starter_kit/src/utils/flutter_modular/flutter_modular_util.dart';
 import 'package:flutter_starter_kit/src/utils/test_data/mock_test_data.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:modular_core/modular_core.dart';
 
 import '../../../../utils/image_picker/image_picker_util_test.mocks.dart';
 import '../../../app_module_test.mocks.dart';
@@ -20,12 +21,39 @@ import '../../applications/bloc/task_bloc/task_bloc_test.mocks.dart';
 void main() {
   final MockTaskBloc mockBloc = MockTaskBloc();
   final MockImagePickerUtil mockImagePickerUtil = MockImagePickerUtil();
+  IModularNavigator mockIModularNavigator = MockIModularNavigator();
+  final MockModular mockModular = MockModular(
+    TodoModule(),
+    replaceBinds: <BindContract<Object>>[
+      Bind<Object>((_) => mockBloc),
+      Bind<IModularNavigator>((_) => mockIModularNavigator),
+    ],
+  );
+
+  // setUp(() {
+  //   mockIModularNavigator = MockIModularNavigator();
+  //
+  //   mockModular.initModule(
+  //     TodoModule(),
+  //     newReplaceBinds: <BindContract<Object>>[
+  //       Bind<Object>((_) => mockBloc),
+  //       Bind<IModularNavigator>((_) => mockIModularNavigator),
+  //     ],
+  //   );
+  // });
+  //
+  // tearDown(() {
+  //   mockModular.disposeModule();
+  // });
 
   setUp(() {
-    initModule(
+    mockIModularNavigator = MockIModularNavigator();
+
+    mockModular.initModule(
       TodoModule(),
-      replaceBinds: <Bind<Object>>[
+      newReplaceBinds: <BindContract<Object>>[
         Bind<Object>((_) => mockBloc),
+        Bind<IModularNavigator>((_) => mockIModularNavigator),
       ],
     );
 
@@ -38,14 +66,12 @@ void main() {
       ]),
     );
 
-    Modular.navigatorDelegate = MockIModularNavigator();
-
-    when(Modular.to.pushNamed(initialRoute))
+    when(mockIModularNavigator.pushNamed(initialRoute))
         .thenAnswer((_) => Future<void>.value());
   });
 
   tearDown(() {
-    Modular.dispose();
+    mockModular.disposeModule();
   });
 
   group('TaskUpdateScreen Class', () {
@@ -54,7 +80,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: TaskUpdateScreenWidget(imagePickerUtil: mockImagePickerUtil),
+          home: TaskUpdateScreen(imagePickerUtil: mockImagePickerUtil),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),
@@ -73,7 +99,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: TaskUpdateScreenWidget(imagePickerUtil: mockImagePickerUtil),
+          home: TaskUpdateScreen(imagePickerUtil: mockImagePickerUtil),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),
@@ -87,15 +113,15 @@ void main() {
 
     testWidgets('Should can save data and have snack bar',
         (WidgetTester tester) async {
-          await tester.pumpWidget(
+      await tester.pumpWidget(
         MaterialApp(
-          home: TaskUpdateScreenWidget(imagePickerUtil: mockImagePickerUtil),
+          home: TaskUpdateScreen(imagePickerUtil: mockImagePickerUtil),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),
       );
 
-          when(mockImagePickerUtil.getBase64Image()).thenAnswer(
+      when(mockImagePickerUtil.getBase64Image()).thenAnswer(
         (_) => Future<String>.value(
           '''
 iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=''',

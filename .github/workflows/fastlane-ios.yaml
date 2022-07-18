@@ -1,34 +1,37 @@
 name: CI/CD fastlane for iOS
 
 on:
-  push:
+#  push:
 #  pull_request:
-#  workflow_dispatch:
-#    inputs:
-#      apiUrl:
-#        description: 'API URL'
-#        required: true
-#      ssrUrl:
-#        description: 'Server send event URL'
-#        required: true
-#      grpcWebScheme:
-#        description: 'GRPC web scheme'
-#        required: true
-#      grpcWebDomain:
-#        description: 'GRPC web domain name'
-#        required: true
-#      grpcWebPort:
-#        description: 'GRPC web running port number'
-#        required: true
-#      grpcMobileDomain:
-#        description: 'GRPC mobile domain name'
-#        required: true
-#      grpcMobilePort:
-#        description: 'GRPC mobile running port number'
-#        required: true
-#      branch:
-#        description: 'Branch trigger workflow'
-#        required: true
+  workflow_dispatch:
+    inputs:
+      apiUrl:
+        description: 'API URL'
+        required: true
+      ssrUrl:
+        description: 'Server send event URL'
+        required: true
+      grpcWebScheme:
+        description: 'GRPC web scheme'
+        required: true
+      grpcWebDomain:
+        description: 'GRPC web domain name'
+        required: true
+      grpcWebPort:
+        description: 'GRPC web running port number'
+        required: true
+      grpcMobileDomain:
+        description: 'GRPC mobile domain name'
+        required: true
+      grpcMobilePort:
+        description: 'GRPC mobile running port number'
+        required: true
+      websocketUrl:
+        description: 'Websocket URL'
+        required: true
+      branch:
+        description: 'Branch trigger workflow'
+        required: true
 
 jobs:
   setup:
@@ -60,6 +63,7 @@ jobs:
           GRPC_WEB_PORT=${{ github.event.inputs.grpcWebPort }}
           GRPC_MOBILE_DOMAIN=${{ github.event.inputs.grpcMobileDomain }}
           GRPC_MOBILE_PORT=${{ github.event.inputs.grpcMobilePort }}
+          WEB_SOCKET_URL=${{ github.event.inputs.websocketUrl }}
           EOF
       - name: Create file .env-cicd
         run: |
@@ -250,44 +254,36 @@ jobs:
 #          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
 #          KEYCHAIN_PATH: ${{ secrets.KEYCHAIN_PATH}}
 #          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
-#      - uses: maierj/fastlane-action@v2.0.1
-#        with:
-#          lane: 'build_file_for_distribution'
-#          subdirectory: 'ios'
-#          verbose: true
-#      - uses: maierj/fastlane-action@v2.0.1
-#        with:
-#          lane: 'build_file_for_app_distribution'
-#          subdirectory: 'ios'
-#          verbose: true
-#      - uses: maierj/fastlane-action@v2.0.1
-#        with:
-#          lane: 'app_distribution_group_developer_qa' # can run specific group for test with input
-#          subdirectory: 'ios'
-#          verbose: true
+      - uses: maierj/fastlane-action@v2.0.1
+        with:
+          lane: 'build_file_for_distribution'
+          subdirectory: 'ios'
+          verbose: true
+      - uses: maierj/fastlane-action@v2.0.1
+        with:
+          lane: 'build_file_for_app_distribution'
+          subdirectory: 'ios'
+          verbose: true
+      - uses: maierj/fastlane-action@v2.0.1
+        with:
+          lane: 'app_distribution_group_developer_qa' # can run specific group for test with input
+          subdirectory: 'ios'
+          verbose: true
+      - run: cd ios; ls -la
+#      - run: cd ios/build; ls -la
       - uses: maierj/fastlane-action@v2.0.1
         with:
           lane: 'release'
           subdirectory: 'ios'
           verbose: true
-        env:
-          FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
-          FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
-          SPACESHIP_2FA_SMS_DEFAULT_PHONE_NUMBER: ${{ secrets.SPACESHIP_2FA_SMS_DEFAULT_PHONE_NUMBER }}
-          FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-          MATCH_USERNAME: ${{ secrets.MATCH_USERNAME }}
-          APP_BUNDLE_ID: ${{ secrets.APP_BUNDLE_ID }}
-          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-          KEYCHAIN_PATH: ${{ secrets.KEYCHAIN_PATH}}
-          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
-          APP_STORE_CONNECT_AUTH_KEY_ID: ${{ secrets.APP_STORE_CONNECT_AUTH_KEY_ID }}
-          APP_STORE_CONNECT_AUTH_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_AUTH_ISSUER_ID }}
-#      - uses: actions/cache@v2
-#        id: file-ipa-distribute
-#        with:
-#          path: ./ios/Runner.ipa
-#          key: file-ipa-distribute
+      - run: cd ios; ls -la
+      - uses: actions/cache@v2
+        id: file-ipa-for-distribute
+        with:
+          path: ./ios/Runner.ipa
+          key: file-ipa-for-distribute
+
+
 
 
 #  build_ipa:
@@ -299,7 +295,6 @@ jobs:
 #      - name: Setup java version 12.x
 #        uses: actions/setup-java@v1
 #        with:
-
 #          java-version: '12.x'
 #      - name: Setup flutter version stable
 #        uses: subosito/flutter-action@v1
@@ -461,10 +456,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - uses: actions/cache@v2
-        id: file-ipa-distribute
+        id: file-ipa-for-distribute
         with:
           path: ./ios/Runner.ipa
-          key: file-ipa-distribute
+          key: file-ipa-for-distribute
       - run: cd ios; ls -la
       - name: Install Open VPN
         run: sudo apt-get install openvpn

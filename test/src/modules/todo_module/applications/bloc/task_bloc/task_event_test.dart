@@ -23,7 +23,7 @@ void main() {
 
     test('Should have mandatory properties', () {
       final TaskGotEvent expectTaskGotEvent =
-      TaskGotEvent(model: expectTaskGetRequestBlocModel);
+          TaskGotEvent(model: expectTaskGetRequestBlocModel);
 
       expect(expectTaskGotEvent.model, expectTaskGetRequestBlocModel);
     });
@@ -58,7 +58,7 @@ void main() {
 
     test('Should have mandatory properties', () {
       final TaskSelectedToUpdatedEvent expectTaskSelectedToUpdateEvent =
-      TaskSelectedToUpdatedEvent(model: expectTaskUpdateBlocModel);
+          TaskSelectedToUpdatedEvent(model: expectTaskUpdateBlocModel);
 
       expect(expectTaskSelectedToUpdateEvent.model, expectTaskUpdateBlocModel);
     });

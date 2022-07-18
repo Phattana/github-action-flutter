@@ -3,7 +3,7 @@ import 'package:flutter_starter_kit/src/utils/test_data/mock_test_data.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('taskStateStatus enum', () {
+  group('TaskStatusState enum', () {
     test('Should have mandatory values', () {
       const Set<String> expectTaskStateStatus = <String>{
         'initial',
@@ -12,14 +12,14 @@ void main() {
         'failure'
       };
 
-      for (final taskStatusState value in taskStatusState.values) {
+      for (final TaskStatusState value in TaskStatusState.values) {
         expect(
           expectTaskStateStatus.contains(value.toString().split('.')[1]),
           true,
         );
       }
 
-      expect(taskStatusState.values.length, expectTaskStateStatus.length);
+      expect(TaskStatusState.values.length, expectTaskStateStatus.length);
     });
   });
 
@@ -29,8 +29,19 @@ void main() {
     });
 
     test('Should have mandatory properties', () {
-      expect(expectTaskInitialState.status, isA<taskStatusState>());
-      expect(expectTaskInitialState.status, taskStatusState.initial);
+      expect(expectTaskInitialState.status, isA<TaskStatusState>());
+      expect(expectTaskInitialState.status, TaskStatusState.initial);
+    });
+  });
+
+  group('TaskLoadingState Class', () {
+    test('Should have TaskLoadingState Class', () {
+      expect(TaskLoadingState, TaskLoadingState);
+    });
+
+    test('Should have mandatory properties', () {
+      expect(expectTaskLoadingState.status, isA<TaskStatusState>());
+      expect(expectTaskLoadingState.status, TaskStatusState.loading);
     });
   });
 
@@ -40,7 +51,7 @@ void main() {
     });
 
     test('Should have mandatory properties', () {
-      expect(expectTaskCreateState.status, taskStatusState.failure);
+      expect(expectTaskCreateState.status, TaskStatusState.failure);
       expect(expectTaskCreateState.error, exceptErrorBlocModel);
       expect(expectTaskCreateState.exception, exceptExceptionBlocModel);
     });
@@ -52,7 +63,7 @@ void main() {
     });
 
     test('Should have mandatory properties', () {
-      expect(expectTaskGetState.status, taskStatusState.failure);
+      expect(expectTaskGetState.status, TaskStatusState.failure);
       expect(expectTaskGetState.query, expectTaskGetRequestBlocModel);
       expect(expectTaskGetState.data, expectTaskGetResponseBlocModelList);
       expect(expectTaskGetState.error, exceptErrorBlocModel);

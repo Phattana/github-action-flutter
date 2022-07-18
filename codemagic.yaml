@@ -9,7 +9,7 @@ workflows:
       vars:
         PUBLIC_ENV_VAR: "value here"
       flutter: stable
-      xcode: 13.4
+      xcode: latest
     cache:
       cache_paths:
         - ~/.pub-cache
@@ -70,11 +70,9 @@ workflows:
         script: make test/generate/mock-file
       - name : fastlane setup
         script : |
-          echo hello
           cd ios
           fastlane setup
       - name : fastlane test lab
         script : |
           cd ios
           fastlane test_lab
-          

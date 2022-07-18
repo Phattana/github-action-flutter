@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_starter_kit/src/configs/l10n/app_localizations.dart';
 import 'package:flutter_starter_kit/src/configs/routes/route_config.dart';
 import 'package:flutter_starter_kit/src/modules/todo_module/applications/bloc/task_bloc/task_bloc.dart';
@@ -12,32 +11,43 @@ import 'package:flutter_starter_kit/src/modules/todo_module/configs/widget_key/w
 import 'package:flutter_starter_kit/src/modules/todo_module/presentations/screens/task_get_screen.dart';
 import 'package:flutter_starter_kit/src/modules/todo_module/services/commons/request_query.dart';
 import 'package:flutter_starter_kit/src/modules/todo_module/todo_module.dart';
+import 'package:flutter_starter_kit/src/utils/flutter_modular/flutter_modular_util.dart';
 import 'package:flutter_starter_kit/src/utils/test_data/mock_test_data.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:modular_core/modular_core.dart';
 
 import '../../../app_module_test.mocks.dart';
 import '../../applications/bloc/task_bloc/task_bloc_test.mocks.dart';
 
 void main() {
   final MockTaskBloc mockBloc = MockTaskBloc();
+  IModularNavigator mockIModularNavigator = MockIModularNavigator();
+  final MockModular mockModular = MockModular(
+    TodoModule(),
+    replaceBinds: <BindContract<Object>>[
+      Bind<Object>((_) => mockBloc),
+      Bind<IModularNavigator>((_) => mockIModularNavigator),
+    ],
+  );
 
   setUp(() {
-    initModule(
+    mockIModularNavigator = MockIModularNavigator();
+
+    mockModular.initModule(
       TodoModule(),
-      replaceBinds: <Bind<Object>>[
+      newReplaceBinds: <BindContract<Object>>[
         Bind<Object>((_) => mockBloc),
+        Bind<IModularNavigator>((_) => mockIModularNavigator),
       ],
     );
-
-    Modular.navigatorDelegate = MockIModularNavigator();
   });
 
   tearDown(() {
-    Modular.dispose();
+    mockModular.disposeModule();
   });
 
-  group('TaskGetScreenWidget Class', () {
+  group('TaskGetScreen Class', () {
     testWidgets('Should have mandatory menu', (WidgetTester tester) async {
       late BuildContext testContext;
 
@@ -54,7 +64,7 @@ void main() {
             builder: (BuildContext context) {
               testContext = context;
 
-              return TaskGetScreenWidget();
+              return TaskGetScreen();
             },
           ),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -86,7 +96,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: TaskGetScreenWidget(),
+          home: TaskGetScreen(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),
@@ -105,7 +115,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: TaskGetScreenWidget(),
+          home: TaskGetScreen(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),
@@ -129,7 +139,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: TaskGetScreenWidget(),
+          home: TaskGetScreen(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),
@@ -151,7 +161,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: TaskGetScreenWidget(),
+          home: TaskGetScreen(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),
@@ -207,7 +217,7 @@ void main() {
     testWidgets('Should call bloc to get task - Success case (tap orderBy)',
         (WidgetTester tester) async {
       final TaskGetState expectBlocStateTwoData = TaskGetState(
-        status: taskStatusState.success,
+        status: TaskStatusState.success,
         query: expectTaskGetRequestBlocModel,
         data: <TaskGetResponseBlocModel>[
           expectTaskGetResponseBlocModel,
@@ -225,7 +235,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: TaskGetScreenWidget(),
+          home: TaskGetScreen(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),
@@ -301,7 +311,7 @@ void main() {
     testWidgets('Should call bloc to get task - Success case (tap sortBy)',
         (WidgetTester tester) async {
       final TaskGetState expectBlocStateTwoData = TaskGetState(
-        status: taskStatusState.success,
+        status: TaskStatusState.success,
         query: expectTaskGetRequestBlocModel,
         data: <TaskGetResponseBlocModel>[
           expectTaskGetResponseBlocModel,
@@ -319,7 +329,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: TaskGetScreenWidget(),
+          home: TaskGetScreen(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),
@@ -404,7 +414,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: TaskGetScreenWidget(),
+          home: TaskGetScreen(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),
@@ -425,10 +435,10 @@ void main() {
         isDone: true,
       );
       const TaskUpdateState expectBlocStateUpdateIsDone = TaskUpdateState(
-        status: taskStatusState.success,
+        status: TaskStatusState.success,
       );
       final TaskGetState expectTaskGetStateSuccessIsDone = TaskGetState(
-        status: taskStatusState.success,
+        status: TaskStatusState.success,
         query: expectTaskGetStateSuccess.query,
         data: <TaskGetResponseBlocModel>[
           TaskGetResponseBlocModel(
@@ -452,7 +462,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: TaskGetScreenWidget(),
+          home: TaskGetScreen(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),
@@ -549,7 +559,7 @@ iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAA
         data: expectTaskUpdateBlocModelTitleImageUrl,
       );
 
-      when(Modular.to.pushNamed(updateTaskRoute))
+      when(mockIModularNavigator.pushNamed(updateTaskRoute))
           .thenAnswer((_) => Future<void>.value());
       when(mockBloc.stream).thenAnswer(
         (_) => Stream<TaskState>.fromIterable(<TaskState>[
@@ -561,7 +571,7 @@ iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAA
 
       await tester.pumpWidget(
         MaterialApp(
-          home: TaskGetScreenWidget(),
+          home: TaskGetScreen(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),
@@ -630,14 +640,14 @@ iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAA
 
       await tester.pump();
 
-      verify(Modular.to.pushNamed(updateTaskRoute)).called(1);
+      verify(mockIModularNavigator.pushNamed(updateTaskRoute)).called(1);
     });
 
     testWidgets('''
 Should call bloc to update task - Failure case (error from bloc update btn)''',
         (WidgetTester tester) async {
           const TaskUpdateState expectBlocStateUpdate = TaskUpdateState(
-        status: taskStatusState.failure,
+        status: TaskStatusState.failure,
       );
 
       when(mockBloc.stream).thenAnswer(
@@ -650,7 +660,7 @@ Should call bloc to update task - Failure case (error from bloc update btn)''',
 
       await tester.pumpWidget(
         MaterialApp(
-          home: TaskGetScreenWidget(),
+          home: TaskGetScreen(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),
@@ -728,7 +738,7 @@ Should call bloc to update task - Failure case (error from bloc update btn)''',
 Should call bloc to update task - Failure case (error from bloc isDone btn)''',
         (WidgetTester tester) async {
           const TaskUpdateState expectBlocStateUpdate = TaskUpdateState(
-        status: taskStatusState.failure,
+        status: TaskStatusState.failure,
       );
 
       when(mockBloc.stream).thenAnswer(
@@ -741,7 +751,7 @@ Should call bloc to update task - Failure case (error from bloc isDone btn)''',
 
       await tester.pumpWidget(
         MaterialApp(
-          home: TaskGetScreenWidget(),
+          home: TaskGetScreen(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),
@@ -823,10 +833,10 @@ Should call bloc to update task - Failure case (error from bloc isDone btn)''',
     testWidgets('Should call bloc to delete task - Success case',
         (WidgetTester tester) async {
       const TaskDeleteState expectBlocStateDelete = TaskDeleteState(
-        status: taskStatusState.success,
+        status: TaskStatusState.success,
       );
       final TaskGetState expectTaskGetStateSuccessDelete = TaskGetState(
-        status: taskStatusState.success,
+        status: TaskStatusState.success,
         query: expectTaskGetStateSuccess.query,
         data: const <TaskGetResponseBlocModel>[],
       );
@@ -842,7 +852,7 @@ Should call bloc to update task - Failure case (error from bloc isDone btn)''',
 
       await tester.pumpWidget(
         MaterialApp(
-          home: TaskGetScreenWidget(),
+          home: TaskGetScreen(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),
@@ -923,7 +933,7 @@ Should call bloc to update task - Failure case (error from bloc isDone btn)''',
         'Should call bloc to delete task - Failure case (error from bloc)',
         (WidgetTester tester) async {
           const TaskDeleteState expectBlocStateDelete = TaskDeleteState(
-        status: taskStatusState.failure,
+        status: TaskStatusState.failure,
       );
 
       when(mockBloc.stream).thenAnswer(
@@ -936,7 +946,7 @@ Should call bloc to update task - Failure case (error from bloc isDone btn)''',
 
       await tester.pumpWidget(
         MaterialApp(
-          home: TaskGetScreenWidget(),
+          home: TaskGetScreen(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),

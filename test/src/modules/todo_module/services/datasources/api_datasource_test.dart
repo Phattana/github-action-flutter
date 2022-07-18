@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -18,7 +19,9 @@ import 'package:mockito/mockito.dart';
 
 import 'api_datasource_test.mocks.dart';
 
-@GenerateMocks(<Type>[Dio, ApiDataSource])
+@GenerateMocks(
+  <Type>[Dio, ApiDataSource, StreamView],
+)
 void main() {
   final MockDio mockDio = MockDio();
   final ApiDataSource expectApiDataSource = ApiDataSource(http: mockDio);
