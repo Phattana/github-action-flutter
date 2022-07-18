@@ -1,0 +1,25 @@
+dependencies: \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/RunnerTests/RunnerTests.m \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/Firebase/CoreOnly/Sources/module.modulemap \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Products/Release-iphoneos/integration_test/integration_test.framework/Modules/module.modulemap \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Products/Release-iphoneos/Flutter.framework/Modules/module.modulemap \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Products/Release-iphoneos/Flutter.framework/Headers/FlutterViewController.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Products/Release-iphoneos/Flutter.framework/Headers/FlutterPluginAppLifeCycleDelegate.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Products/Release-iphoneos/Flutter.framework/Headers/FlutterHeadlessDartRunner.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Products/Release-iphoneos/Flutter.framework/Headers/FlutterEngineGroup.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Products/Release-iphoneos/Flutter.framework/Headers/FlutterEngine.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Products/Release-iphoneos/Flutter.framework/Headers/FlutterDartProject.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Products/Release-iphoneos/Flutter.framework/Headers/FlutterCallbackCache.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Products/Release-iphoneos/Flutter.framework/Headers/FlutterTexture.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Products/Release-iphoneos/Flutter.framework/Headers/FlutterPlatformViews.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Products/Release-iphoneos/Flutter.framework/Headers/FlutterCodecs.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Products/Release-iphoneos/Flutter.framework/Headers/FlutterChannels.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Products/Release-iphoneos/Flutter.framework/Headers/FlutterBinaryMessenger.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Products/Release-iphoneos/Flutter.framework/Headers/FlutterPlugin.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Products/Release-iphoneos/Flutter.framework/Headers/FlutterMacros.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Products/Release-iphoneos/Flutter.framework/Headers/FlutterAppDelegate.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Products/Release-iphoneos/Flutter.framework/Headers/Flutter.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Products/Release-iphoneos/integration_test/integration_test.framework/Headers/IntegrationTestPlugin.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Products/Release-iphoneos/integration_test/integration_test.framework/Headers/IntegrationTestIosTest.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Products/Release-iphoneos/integration_test/integration_test.framework/Headers/FLTIntegrationTestRunner.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Products/Release-iphoneos/integration_test/integration_test.framework/Headers/integration_test-umbrella.h

@@ -1,0 +1,29 @@
+dependencies: \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebasePerformance/FirebasePerformance/Sources/FPRNanoPbUtils.m \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Intermediates.noindex/Pods.build/Release-iphoneos/FirebasePerformance.build/module.modulemap \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebasePerformance/FirebasePerformance/Sources/FPRNanoPbUtils.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebasePerformance/FirebasePerformance/Sources/AppActivity/FPRTraceBackgroundActivityTracker.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebasePerformance/FirebasePerformance/Sources/Instrumentation/FPRNetworkTrace.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebasePerformance/FirebasePerformance/Sources/AppActivity/FPRSessionDetails.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebasePerformance/FirebasePerformance/Sources/FIRPerformance+Internal.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebasePerformance/FirebasePerformance/Sources/Public/FirebasePerformance/FIRPerformance.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebasePerformance/FirebasePerformance/Sources/Public/FirebasePerformance/FIRTrace.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebasePerformance/FirebasePerformance/Sources/Public/FirebasePerformance/FIRPerformanceAttributable.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebasePerformance/FirebasePerformance/Sources/Protogen/nanopb/perf_metric.nanopb.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Intermediates.noindex/Pods.build/Release-iphoneos/nanopb.build/module.modulemap \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/nanopb/pb_encode.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/nanopb/pb_decode.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/nanopb/pb_common.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/nanopb/pb.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/Target\ Support\ Files/nanopb/nanopb-umbrella.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebasePerformance/FirebasePerformance/Sources/Common/FPRConstants.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebasePerformance/FirebasePerformance/Sources/FPRDataUtils.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebasePerformance/FirebasePerformance/Sources/Timer/FIRTrace+Internal.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebasePerformance/FirebasePerformance/Sources/Timer/FPRCounterList.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebasePerformance/FirebasePerformance/Sources/Timer/FIRTrace+Private.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebasePerformance/FirebasePerformance/Sources/FPRClient+Private.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebasePerformance/FirebasePerformance/Sources/FPRClient.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebasePerformance/FirebasePerformance/Sources/FPRConfiguration.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebasePerformance/FirebasePerformance/Sources/Gauges/FPRGaugeManager.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebasePerformance/FirebasePerformance/Sources/Gauges/CPU/FPRCPUGaugeData.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebasePerformance/FirebasePerformance/Sources/Gauges/Memory/FPRMemoryGaugeData.h

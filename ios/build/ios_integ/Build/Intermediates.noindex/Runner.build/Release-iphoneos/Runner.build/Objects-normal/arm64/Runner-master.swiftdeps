@@ -1,0 +1,6 @@
+version: "Apple Swift version 5.6.1 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)"
+options: "d11eac906a67f209ade9b6469e8a9a94daa2d2056a42ca339114b10619303f1c"
+build_start_time: [1655714676, 409994125]
+build_end_time: [1655714676, 702658176]
+inputs:
+  "/Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Runner/AppDelegate.swift": [1642329346, 517989397]

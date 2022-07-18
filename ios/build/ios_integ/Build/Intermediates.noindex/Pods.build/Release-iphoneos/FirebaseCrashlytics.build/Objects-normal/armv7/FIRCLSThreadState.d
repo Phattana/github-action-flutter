@@ -1,0 +1,19 @@
+dependencies: \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Helpers/FIRCLSThreadState.c \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/build/ios_integ/Build/Intermediates.noindex/Pods.build/Release-iphoneos/FirebaseCrashlytics.build/module.modulemap \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Helpers/FIRCLSThreadState.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Helpers/FIRCLSDefines.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Helpers/FIRCLSUtility.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Components/FIRCLSGlobals.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Components/FIRCLSContext.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Components/FIRCLSBinaryImage.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Helpers/FIRCLSFeatures.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Helpers/FIRCLSFile.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebaseCrashlytics/Crashlytics/Shared/FIRCLSMachO/FIRCLSMachO.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Components/FIRCLSHost.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Components/FIRCLSUserLogging.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Handlers/FIRCLSException.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Handlers/FIRCLSMachException.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Handlers/FIRCLSSignal.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Helpers/FIRCLSAllocate.h \
+  /Users/phattana/IdeaProjects/template-flutter-clean-arch/ios/Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Helpers/FIRCLSInternalLogging.h
