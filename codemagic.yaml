@@ -72,14 +72,14 @@ workflows:
         script : |
           cd ios
           fastlane setup
-#      - name : fastlane test lab
-#        script : |
-#          cd ios
-#          fastlane test_lab
-      - name : test
-        script: |
-          pod install
-          security unlock-keychain -p $KEYCHAIN_PASSWORD ~/Library/Keychains/cicd.keychain-db
-          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $KEYCHAIN_PASSWORD ~/Library/Keychains/cicd.keychain-db
-          flutter build ios --config-only integration_test/main_integration_test.dart
-          flutter build ios integration_test/main_integration_test.dart --release
+      - name : fastlane test lab
+        script : |
+          cd ios
+          fastlane test_lab
+#      - name : test
+#        script: |
+#          pod install
+#          security unlock-keychain -p $KEYCHAIN_PASSWORD ~/Library/Keychains/cicd.keychain-db
+#          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $KEYCHAIN_PASSWORD ~/Library/Keychains/cicd.keychain-db
+#          flutter build ios --config-only integration_test/main_integration_test.dart
+#          flutter build ios integration_test/main_integration_test.dart --release
