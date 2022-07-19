@@ -9,7 +9,7 @@ workflows:
       vars:
         PUBLIC_ENV_VAR: "value here"
       flutter: master
-      xcode: latest
+      xcode: 13
     cache:
       cache_paths:
         - ~/.pub-cache
