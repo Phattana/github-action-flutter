@@ -17,8 +17,11 @@ platform:ios do
             sh("keychain unlock -pw $KEYCHAIN_PASSWORD -p $HOME/Library/Keychains/cicd.keychain-db")
             sh('security list-keychains -d user -s $HOME/Library/Keychains/cicd.keychain-db $(security list-keychains -d user | sed s/\"//g)')
             # import certificate
-            sh("security import ../distribution.p12 -P $CERTIFICATE_PASSWORD -A -t cert -f pkcs12 -k $HOME/Library/Keychains/cicd.keychain-db")
-            sh("security import ../development.p12 -P $CERTIFICATE_PASSWORD -A -t cert -f pkcs12 -k $HOME/Library/Keychains/cicd.keychain-db")
+#             sh("security import ../distribution.p12 -P $CERTIFICATE_PASSWORD -A -t cert -f pkcs12 -k $HOME/Library/Keychains/cicd.keychain-db")
+            sh("keychain add-certificates -p $HOME/Library/Keychains/cicd.keychain-db -c ../distribution.p12 --certificate-password $CERTIFICATE_PASSWORD -A")
+#             sh("security import ../development.p12 -P $CERTIFICATE_PASSWORD -A -t cert -f pkcs12 -k $HOME/Library/Keychains/cicd.keychain-db")
+            sh("keychain add-certificates -p $HOME/Library/Keychains/cicd.keychain-db -c ../development.p12 --certificate-password $CERTIFICATE_PASSWORD -A")
+
             # set allow codesign
             sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
             # copy provisioning profile
@@ -62,7 +65,8 @@ platform:ios do
             sh("pod install")
         end
 
-        sh("security unlock-keychain -p $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
+#         sh("security unlock-keychain -p $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
+        sh("keychain unlock -pw $KEYCHAIN_PASSWORD -p $HOME/Library/Keychains/cicd.keychain-db")
 #         if is_ci
         sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
 #         end
