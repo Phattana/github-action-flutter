@@ -72,7 +72,7 @@ platform:ios do
              targets: "RunnerTests",
              use_automatic_signing: false,
              team_id: $APPLE_TEAM_ID,
-             code_sign_identity:  "iOS Development",
+             code_sign_identity:  "Apple Development",
         )
         sh("xcodebuild -workspace ../Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath build/ios_integ -sdk iphoneos build-for-testing")
         # zip file
