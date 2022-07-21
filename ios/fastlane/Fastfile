@@ -13,6 +13,8 @@ platform:ios do
             # create keychain
 #             sh("security create-keychain -p $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
             sh("keychain create -pw $KEYCHAIN_PASSWORD -p $HOME/Library/Keychains/cicd.keychain-db")
+            sh("cd $HOME/Library/Keychains | ls -la")
+
 #             sh("security unlock-keychain -p $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
             sh("keychain unlock -pw $KEYCHAIN_PASSWORD -p $HOME/Library/Keychains/cicd.keychain-db")
             sh('security list-keychains -d user -s $HOME/Library/Keychains/cicd.keychain-db $(security list-keychains -d user | sed s/\"//g)')
@@ -80,7 +82,6 @@ platform:ios do
              team_id: $APPLE_TEAM_ID,
              code_sign_identity:  "Apple Development",
         )
-        sh("cd $HOME/Library/Keychains | ls -la")
         sh("xcodebuild -workspace ../Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath build/ios_integ -sdk iphoneos build-for-testing")
         # zip file
         sh("cd build/ios_integ/Build/Products/; zip -r ../../../../../ios_tests.zip .")
