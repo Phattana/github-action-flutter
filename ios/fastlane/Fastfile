@@ -13,7 +13,7 @@ platform:ios do
             # create keychain
 #             sh("security create-keychain -p $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
             sh("keychain create -pw $KEYCHAIN_PASSWORD -p $HOME/Library/Keychains/cicd.keychain-db")
-            sh("cd $HOME/Library/Keychains | ls -la")
+            sh("cd $HOME/Library/Keychains/cicd.keychain-db | ls -la")
 
 #             sh("security unlock-keychain -p $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
             sh("keychain unlock -pw $KEYCHAIN_PASSWORD -p $HOME/Library/Keychains/cicd.keychain-db")
