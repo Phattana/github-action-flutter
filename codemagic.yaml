@@ -51,10 +51,6 @@ workflows:
           cd ios; cat << EOF >> distribute_profile_base64.txt
           $DISTRIBUTE_PROFILE_BASE64
           EOF
-      - name: ls -la
-        script: |
-          cd ios
-          ls -la
       - name : Generate Distribute_comhugemanflutterstarterkit.mobileprovision
         script : base64 -d ios/distribute_profile_base64.txt > ios/Distribute_comhugemanflutterstarterkit.mobileprovision
       - name: Create file adhoc_profile_base64.txt
@@ -76,10 +72,10 @@ workflows:
         script : |
           cd ios
           fastlane setup
-      - name : fastlane test lab
-        script : |
-          cd ios
-          fastlane test_lab
+#      - name : fastlane test lab
+#        script : |
+#          cd ios
+#          fastlane test_lab
 #      - name : test
 #        script: |
 #          pod install

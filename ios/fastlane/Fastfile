@@ -18,7 +18,7 @@ platform:ios do
 #             sh("security unlock-keychain -p $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
             sh("keychain unlock -pw $KEYCHAIN_PASSWORD -p $HOME/Library/Keychains/cicd.keychain-db")
             sh('security list-keychains -d user -s $HOME/Library/Keychains/cicd.keychain-db $(security list-keychains -d user | sed s/\"//g)')
-            sh("cd ../ ; ls -la")
+            sh("cd $HOME/Library/Keychains ; ls -la")
             # import certificate
 #             sh("security import ../distribution.p12 -P $CERTIFICATE_PASSWORD -A -t cert -f pkcs12 -k $HOME/Library/Keychains/cicd.keychain-db")
             sh("keychain add-certificates -p $HOME/Library/Keychains/cicd.keychain-db -c ../distribution.p12 --certificate-password $CERTIFICATE_PASSWORD -A")
