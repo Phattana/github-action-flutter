@@ -72,10 +72,10 @@ workflows:
         script : |
           cd ios
           fastlane setup
-#      - name : fastlane test lab
-#        script : |
-#          cd ios
-#          fastlane test_lab
+      - name : fastlane test lab
+        script : |
+          cd ios
+          fastlane test_lab
 #      - name : test
 #        script: |
 #          pod install
