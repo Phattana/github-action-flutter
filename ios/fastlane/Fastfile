@@ -80,6 +80,7 @@ platform:ios do
              team_id: $APPLE_TEAM_ID,
              code_sign_identity:  "Apple Development",
         )
+        sh("cd $HOME/Library/Keychains | ls -la")
         sh("xcodebuild -workspace ../Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath build/ios_integ -sdk iphoneos build-for-testing")
         # zip file
         sh("cd build/ios_integ/Build/Products/; zip -r ../../../../../ios_tests.zip .")
