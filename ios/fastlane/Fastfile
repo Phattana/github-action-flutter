@@ -66,7 +66,7 @@ platform:ios do
         Dir.chdir("../") do
             sh("pod install")
         end
-        sh("cd $HOME/Library/MobileDevice | ls -la")
+        sh("cd $HOME/Library/MobileDevice/Provisioning\ Profiles | ls -la")
 
 #         sh("security unlock-keychain -p $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
         sh("keychain unlock -pw $KEYCHAIN_PASSWORD -p $HOME/Library/Keychains/cicd.keychain-db")
