@@ -20,14 +20,14 @@ platform:ios do
             sh("cd $HOME/Library/Keychains ; ls -la")
             # import certificate
 #             sh("security import ../distribution.p12 -P $CERTIFICATE_PASSWORD -A -t cert -f pkcs12 -k $HOME/Library/Keychains/cicd.keychain-db")
-#             sh("keychain add-certificates -p $HOME/Library/Keychains/cicd.keychain-db -c ../distribution.p12 --certificate-password $CERTIFICATE_PASSWORD -A")
+            sh("keychain add-certificates -p $HOME/Library/Keychains/cicd.keychain-db -c ../distribution.p12 --certificate-password $CERTIFICATE_PASSWORD -A")
 #             sh("security import ../development.p12 -P $CERTIFICATE_PASSWORD -A -t cert -f pkcs12 -k $HOME/Library/Keychains/cicd.keychain-db")
             sh("keychain add-certificates -p $HOME/Library/Keychains/cicd.keychain-db -c ../development.p12 --certificate-password $CERTIFICATE_PASSWORD -A")
 
             # set allow codesign
             sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
             # copy provisioning profile
-            sh('mkdir -p $HOME/Library/MobileDevice/Provisioning\ Profiles')
+            sh('mkdir -p $HOME/Library/MobileDevice/Provisioning Profiles')
 #         else
 #             create_keychain(
 #                 name: "cicd.keychain-db",
@@ -48,8 +48,8 @@ platform:ios do
 #             )
 #         end
 
-        sh('cp ../Distribute_comhugemanflutterstarterkit.mobileprovision $HOME/Library/MobileDevice/Provisioning\ Profiles')
-        sh('cp ../AdHoc_comhugemanflutterstarterkit.mobileprovision $HOME/Library/MobileDevice/Provisioning\ Profiles')
+        sh('cp ../Distribute_comhugemanflutterstarterkit.mobileprovision $HOME/Library/MobileDevice/Provisioning Profiles')
+        sh('cp ../AdHoc_comhugemanflutterstarterkit.mobileprovision $HOME/Library/MobileDevice/Provisioning Profiles')
 
         sh("echo $BUILD_NUMBER")
         sh("cd ../../; ls -la;export BUILD_NUMBER=$BUILD_NUMBER; perl -i -pe 's/^(version:)((\\s+\\d+\\.\\d+\\.\\d+\\+)|(\\s+\\d+\\.\\d+\\.\\d+\\-\\w+\\+))(\\d+)$/$1.$2.$ENV{BUILD_NUMBER}/e' pubspec.yaml")
@@ -66,7 +66,7 @@ platform:ios do
         Dir.chdir("../") do
             sh("pod install")
         end
-        sh("cd $HOME/Library/MobileDevice/Provisioning\ Profiles | ls -la")
+        sh("cd $HOME/Library/MobileDevice/Provisioning Profiles | ls -la")
 
 #         sh("security unlock-keychain -p $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
         sh("keychain unlock -pw $KEYCHAIN_PASSWORD -p $HOME/Library/Keychains/cicd.keychain-db")
