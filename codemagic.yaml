@@ -51,6 +51,9 @@ workflows:
           cd ios; cat << EOF >> distribute_profile_base64.txt
           $DISTRIBUTE_PROFILE_BASE64
           EOF
+      - name: ls -la
+        script: |
+          ls -la
       - name : Generate Distribute_comhugemanflutterstarterkit.mobileprovision
         script : base64 -d ios/distribute_profile_base64.txt > ios/Distribute_comhugemanflutterstarterkit.mobileprovision
       - name: Create file adhoc_profile_base64.txt
