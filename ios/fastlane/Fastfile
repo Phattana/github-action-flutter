@@ -12,6 +12,7 @@ platform:ios do
 #         if is_ci
             # create keychain
 #             sh("security create-keychain -p $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
+            sh("keychain initialize -p $HOME/Library/Keychains/cicd.keychain-db -pw $KEYCHAIN_PASSWORD")
             sh("keychain create -pw $KEYCHAIN_PASSWORD -p $HOME/Library/Keychains/cicd.keychain-db")
 
 #             sh("security unlock-keychain -p $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
@@ -54,6 +55,7 @@ platform:ios do
         sh("echo $BUILD_NUMBER")
         sh("cd ../../; ls -la;export BUILD_NUMBER=$BUILD_NUMBER; perl -i -pe 's/^(version:)((\\s+\\d+\\.\\d+\\.\\d+\\+)|(\\s+\\d+\\.\\d+\\.\\d+\\-\\w+\\+))(\\d+)$/$1.$2.$ENV{BUILD_NUMBER}/e' pubspec.yaml")
         sh("cd ../../; grep 'version:' pubspec.yaml")
+        sh("xcode-project use-profiles")
 
         increment_build_number(
           build_number: $BUILD_NUMBER,
