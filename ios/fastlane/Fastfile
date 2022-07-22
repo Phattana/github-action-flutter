@@ -24,7 +24,6 @@ platform:ios do
             sh("keychain add-certificates -p $HOME/Library/Keychains/cicd.keychain-db -c ../distribution.p12 --certificate-password $CERTIFICATE_PASSWORD -A")
 #             sh("security import ../development.p12 -P $CERTIFICATE_PASSWORD -A -t cert -f pkcs12 -k $HOME/Library/Keychains/cicd.keychain-db")
             sh("keychain add-certificates -p $HOME/Library/Keychains/cicd.keychain-db -c ../development.p12 --certificate-password $CERTIFICATE_PASSWORD -A")
-            sh("xcode-project use-profiles")
 
             # set allow codesign
             sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
@@ -70,6 +69,8 @@ platform:ios do
         end
 #         sh("security unlock-keychain -p $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
         sh("keychain unlock -pw $KEYCHAIN_PASSWORD -p $HOME/Library/Keychains/cicd.keychain-db")
+        sh("xcode-project use-profiles")
+
 #         if is_ci
         sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
 #         end
