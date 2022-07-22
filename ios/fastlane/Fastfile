@@ -51,7 +51,7 @@ platform:ios do
 
         sh('cp ../Distribute_comhugemanflutterstarterkit.mobileprovision $HOME/Library/MobileDevice/Provisioning\ Profiles')
         sh('cp ../AdHoc_comhugemanflutterstarterkit.mobileprovision $HOME/Library/MobileDevice/Provisioning\ Profiles')
-        sh("cd $HOME/Library/MobileDevice ; ls -la")
+        sh('cd $HOME/Library/MobileDevice/Provisioning\ Profiles ; ls -la')
 
 
         sh("echo $BUILD_NUMBER")
@@ -73,7 +73,7 @@ platform:ios do
         sh("keychain unlock -pw $KEYCHAIN_PASSWORD -p $HOME/Library/Keychains/cicd.keychain-db")
 #         if is_ci
         sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
-        sh("xcode-project use-profiles --project=Runner.xcodeproj --export-options-plist=exportOptions.plist --archive-method=development")
+        sh('xcode-project use-profiles --project=Runner.xcodeproj --profile=$HOME/Library/MobileDevice/Provisioning\ Profiles --export-options-plist=exportOptions.plist --archive-method=development')
 
 #         end
         # build file
