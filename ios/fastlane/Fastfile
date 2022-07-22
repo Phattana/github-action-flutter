@@ -71,6 +71,7 @@ platform:ios do
         end
 #         sh("security unlock-keychain -p $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
         sh("keychain initialize")
+        sh('app-store-connect fetch-signing-files "$APP_BUNDLE_ID" --type IOS_APP_DEVELOPMENT')
         sh("keychain add-certificates -c ../distribution.p12 --certificate-password $CERTIFICATE_PASSWORD")
         sh("keychain add-certificates -c ../development.p12 --certificate-password $CERTIFICATE_PASSWORD")
 
