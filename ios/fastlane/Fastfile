@@ -66,15 +66,10 @@ platform:ios do
         Dir.chdir("../") do
             sh("pod install")
         end
-        sh("cd $HOME/Library/MobileDevice/Provisioning\ Profiles | ls -la")
-
-        sh("security list-keychains -s $HOME/Library/Keychains/cicd.keychain-db")
-
 #         sh("security unlock-keychain -p $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
         sh("keychain unlock -pw $KEYCHAIN_PASSWORD -p $HOME/Library/Keychains/cicd.keychain-db")
 #         if is_ci
-        sh("security set-keychain-settings $HOME/Library/Keychains/cicd.keychain-db")
-#         sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
+        sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
 #         end
         # build file
         sh("flutter build ios --config-only integration_test/main_integration_test.dart")
