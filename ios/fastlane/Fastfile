@@ -69,7 +69,6 @@ platform:ios do
         end
 #         sh("security unlock-keychain -p $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
         sh("keychain unlock -pw $KEYCHAIN_PASSWORD -p $HOME/Library/Keychains/cicd.keychain-db")
-        sh("xcode-project use-profiles --project=Runner.xcodeproj --profile=$HOME/Library/MobileDevice/Provisioning --export-options-plist=exportOptions.plist --archive-method=development")
 
 #         if is_ci
         sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
@@ -77,13 +76,15 @@ platform:ios do
         # build file
         sh("flutter build ios --config-only integration_test/main_integration_test.dart")
         sh("flutter build ios integration_test/main_integration_test.dart --release")
-        update_code_signing_settings(
-             path: "Runner.xcodeproj",
-             targets: "RunnerTests",
-             use_automatic_signing: false,
-             team_id: $APPLE_TEAM_ID,
-             code_sign_identity:  "Apple Development",
-        )
+#         update_code_signing_settings(
+#              path: "Runner.xcodeproj",
+#              targets: "RunnerTests",
+#              use_automatic_signing: false,
+#              team_id: $APPLE_TEAM_ID,
+#              code_sign_identity:  "Apple Development",
+#         )
+        sh("xcode-project use-profiles --project=Runner.xcodeproj --profile=$HOME/Library/MobileDevice/Provisioning\ Profiles/AdHoc_comhugemanflutterstarterkit.mobileprovision --export-options-plist=exportOptions.plist --archive-method=development")
+
         sh("xcodebuild -workspace ../Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath build/ios_integ -sdk iphoneos build-for-testing")
         # zip file
         sh("cd build/ios_integ/Build/Products/; zip -r ../../../../../ios_tests.zip .")
