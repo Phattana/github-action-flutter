@@ -76,7 +76,7 @@ platform:ios do
 
 #         if is_ci
 #         sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $KEYCHAIN_PASSWORD $HOME/Library/Keychains/cicd.keychain-db")
-        sh('xcode-project use-profiles --project=Runner.xcodeproj --profile=$HOME/Library/MobileDevice/Provisioning\ Profiles/AdHoc_comhugemanflutterstarterkit.mobileprovision --export-options-plist=exportOptions.plist --archive-method=development')
+        sh('xcode-project use-profiles')
 
 #         end
         # build file
