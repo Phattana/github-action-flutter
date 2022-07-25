@@ -78,6 +78,8 @@ platform:ios do
         sh("cd build/ios_integ/Build/Products/; ls -la")
         # zip file
         sh('cd build/ios_integ/Build/Products/; zip -r "ios_tests.zip" "Release-iphoneos" "Runner_iphoneos15.5-arm64.xctestrun"')
+        sh("cd build/ios_integ/Build/Products/; ls -la")
+
         # upload to firebase test lab
 #         sh("gcloud firebase test ios run --type=xctest --test=../ios_tests.zip --device=model=iphone13pro,version=15.2,locale=en,orientation=portrait --xcode-version=13.3.1 ")
     end
