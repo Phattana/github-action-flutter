@@ -1,27 +1,47 @@
 workflows:
-  my-workflow:
-    name: My workflow name
-    instance_type: mac_mini
-    max_build_duration: 60
+  my-workflow:                # workflow ID
+    name: My workflow name    # workflow name displayed in Codemagic UI
+    instance_type: mac_mini   # machine instance type
+    max_build_duration: 60    # build duration in minutes (min 1, max 120)
     environment:
-      groups:
+      xcode: latest # Define latest, edge or version (e.g. 11.2)
+      # xcode: 13.4.1
+      # cocoapods: 1.11.2
+      # flutter: stable   # Define the channel name or version (e.g. v1.13.4)
+      flutter: 3.0.3
+      groups:             # Define your environment variables groups here
         - cicd
-      vars:
-        PUBLIC_ENV_VAR: "value here"
-      flutter: master
-      xcode: 13
-    cache:
-      cache_paths:
-        - ~/.pub-cache
     triggering:
       events:
         - push
-      branch_patterns:
-        - pattern: '*'
-          include: true
-          source: true
-      cancel_previous_builds: true
     scripts:
+      - name: Hello world workflow
+        script: echo "Hello World!"
+      - name: Create file .env
+        script: |
+          cat << EOF >> .env
+          EOF
+      - name: Create file .env-cicd
+        script: |
+          cat << EOF >> .env-cicd
+          FASTLANE_FIREBASE_APP_DISTRIBUTE_ID_IOS=$FASTLANE_FIREBASE_APP_DISTRIBUTE_ID_IOS
+          APP_BUNDLE_ID=$APP_BUNDLE_ID
+          APPLE_ITC_TEAM_ID=$APPLE_ITC_TEAM_ID
+          APPLE_TEAM_ID=$APPLE_TEAM_ID
+          FIREBASE_TOKEN=test
+          KEYCHAIN_PASSWORD=$KEYCHAIN_PASSWORD
+          APP_STORE_CONNECT_AUTH_KEY_ID=$APP_STORE_CONNECT_AUTH_KEY_ID
+          APP_STORE_CONNECT_AUTH_ISSUER_ID=$APP_STORE_CONNECT_AUTH_ISSUER_ID
+          P12_PASSWORD=$P12_PASSWORD
+          CERTIFICATE_PASSWORD=$CERTIFICATE_PASSWORD
+          DISTRIBUTE_PROFILE_NAME=$DISTRIBUTE_PROFILE_NAME
+          ADHOC_PROFILE_NAME=$ADHOC_PROFILE_NAME
+          BUILD_NUMBER=$BUILD_NUMBER
+          MOBSF_URL=test
+          MOBSF_API_KEY=test
+          ADHOC_PROFILE_NAME=$ADHOC_PROFILE_NAME
+          BRANCH_NAME=test
+          EOF
       - name: Create file GoogleService-Info.plist
         script: |
           cd ios; cat << EOF >> GoogleService-Info.plist
@@ -61,25 +81,46 @@ workflows:
       - name : AdHoc_comhugemanflutterstarterkit.mobileprovision
         script: base64 -d ios/adhoc_profile_base64.txt > ios/AdHoc_comhugemanflutterstarterkit.mobileprovision
       - name: Install dependencies
-        script: make prject/install/package/codemagic
-#      - name : Pod install
-#        script: cd ios; pod install
-#      - name : Generate l10n
-#        script: make l10n/generate
-#      - name: Generate mock file for test
-#        script: make test/generate/mock-file
-      - name : fastlane setup
-        script : |
-          cd ios
-          fastlane setup
+        script: make project/install/package/codemagic
+      # - name : Pod install
+      #   script: cd ios; pod install
+      - name : Generate l10n
+        script: make l10n/generate
+      - name: Generate mock file for test
+        script: make test/generate/mock-file
+      - name: Set up keychain to be used for code signing using Codemagic CLI 'keychain' command
+        script: keychain initialize
+      - name: Set up Provisioning profiles from environment variables
+        script: |
+          PROFILES_HOME="$HOME/Library/MobileDevice/Provisioning Profiles"
+          mkdir -p "$PROFILES_HOME"
+          PROFILE_PATH="$(mktemp "$PROFILES_HOME"/"$ADHOC_PROFILE_NAME".mobileprovision)"
+          echo ${ADHOC_PROFILE_BASE64} | base64 --decode > "$PROFILE_PATH"
+          echo "Saved provisioning profile $PROFILE_PATH"
+      - name: Set up signing certificate
+        script: |
+          echo $DEVELOPMENT_P12_BASE64 | base64 --decode > /tmp/certificate.p12
+          if [ -z ${CERTIFICATE_PASSWORD+x} ]; then
+            # when using a certificate that is not password-protected
+            keychain add-certificates --certificate /tmp/certificate.p12
+          else
+            # when using a password-protected certificate
+            keychain add-certificates --certificate /tmp/certificate.p12 --certificate-password $CERTIFICATE_PASSWORD
+          fi
+      - name: Set up code signing settings on Xcode project
+        script: xcode-project use-profiles
+      # - name : fastlane setup
+      #   script : |
+      #     cd ios
+      #     fastlane setup
+      - name: Run Firebase Test Lab tests
+        script: |
+          set -ex
+          echo $GCLOUD_KEY > ./gcloud_key_file.json
+          gcloud auth activate-service-account --key-file=gcloud_key_file.json
+          
+          gcloud --quiet config set project $FIREBASE_PROJECT_ID
       - name : fastlane test lab
         script : |
           cd ios
           fastlane test_lab
-#      - name : test
-#        script: |
-#          pod install
-#          security unlock-keychain -p $KEYCHAIN_PASSWORD ~/Library/Keychains/cicd.keychain-db
-#          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $KEYCHAIN_PASSWORD ~/Library/Keychains/cicd.keychain-db
-#          flutter build ios --config-only integration_test/main_integration_test.dart
-#          flutter build ios integration_test/main_integration_test.dart --release
