@@ -75,10 +75,11 @@ platform:ios do
             code_sign_identity:  "Apple Development",
         )
         sh("xcodebuild -workspace ../Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath build/ios_integ -sdk iphoneos build-for-testing")
+        sh("cd build/ios_integ/Build/Products/; ls -la")
         # zip file
         sh('cd build/ios_integ/Build/Products/; zip -r "ios_tests.zip" "Release-iphoneos" "Runner_iphoneos15.5-arm64.xctestrun"')
         # upload to firebase test lab
-        sh("gcloud firebase test ios run --type=xctest --test=../ios_tests.zip --device=model=iphone13pro,version=15.2,locale=en,orientation=portrait --xcode-version=13.3.1 ")
+#         sh("gcloud firebase test ios run --type=xctest --test=../ios_tests.zip --device=model=iphone13pro,version=15.2,locale=en,orientation=portrait --xcode-version=13.3.1 ")
     end
 
     desc "Run mobSF (upload file and scan file)"
