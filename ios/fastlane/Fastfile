@@ -21,25 +21,25 @@ platform:ios do
             sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k #{ENV['KEYCHAIN_PASSWORD']} ~/Library/Keychains/cicd.keychain-db")
             # copy provisioning profile
             sh('mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles')
-        else
-            create_keychain(
-                name: "cicd.keychain-db",
-                unlock: true,
-                timeout: 0,
-                password: ENV["KEYCHAIN_PASSWORD"],
-            )
-
-            import_certificate(
-                certificate_path: "distribution.cer",
-                keychain_name: "cicd.keychain-db",
-                keychain_password: ENV["KEYCHAIN_PASSWORD"]
-            )
-            import_certificate(
-                certificate_path: "development.cer",
-                keychain_name: "cicd.keychain-db",
-                keychain_password: ENV["KEYCHAIN_PASSWORD"]
-            )
-        end
+#         else
+#             create_keychain(
+#                 name: "cicd.keychain-db",
+#                 unlock: true,
+#                 timeout: 0,
+#                 password: ENV["KEYCHAIN_PASSWORD"],
+#             )
+#
+#             import_certificate(
+#                 certificate_path: "distribution.cer",
+#                 keychain_name: "cicd.keychain-db",
+#                 keychain_password: ENV["KEYCHAIN_PASSWORD"]
+#             )
+#             import_certificate(
+#                 certificate_path: "development.cer",
+#                 keychain_name: "cicd.keychain-db",
+#                 keychain_password: ENV["KEYCHAIN_PASSWORD"]
+#             )
+#         end
 
         sh('cp ../Distribute_comhugemanflutterstarterkit.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles')
         sh('cp ../AdHoc_comhugemanflutterstarterkit.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles')
