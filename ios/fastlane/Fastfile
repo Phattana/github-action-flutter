@@ -76,7 +76,7 @@ platform:ios do
         )
         xcodebuild(
             workspace: "../Runner.xcworkspace",
-            scheme: "Runner"
+            scheme: "Runner",
             config: "Flutter/Release.xcconfig",
             derivedDataPath: "build/ios_integ",
             sdk: "iphoneos",
