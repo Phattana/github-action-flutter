@@ -9,7 +9,7 @@ end
 platform:ios do
     desc "Setup Certificate"
     lane:setup do
-        if is_ci
+#         if is_ci
             # create keychain
             sh("security create-keychain -p #{ENV['KEYCHAIN_PASSWORD']} ~/Library/Keychains/cicd.keychain-db")
             sh("security unlock-keychain -p #{ENV['KEYCHAIN_PASSWORD']} ~/Library/Keychains/cicd.keychain-db")
@@ -103,9 +103,9 @@ platform:ios do
 #         end
 
         sh("security unlock-keychain -p #{ENV['KEYCHAIN_PASSWORD']} ~/Library/Keychains/cicd.keychain-db")
-        if is_ci
+#         if is_ci
             sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k #{ENV['KEYCHAIN_PASSWORD']} ~/Library/Keychains/cicd.keychain-db")
-        end
+#         end
 
         update_code_signing_settings(
             path: "Runner.xcodeproj",
@@ -165,9 +165,9 @@ platform:ios do
         end
 
         sh("security unlock-keychain -p #{ENV['KEYCHAIN_PASSWORD']} ~/Library/Keychains/cicd.keychain-db")
-        if is_ci
+#         if is_ci
             sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k #{ENV['KEYCHAIN_PASSWORD']} ~/Library/Keychains/cicd.keychain-db")
-        end
+#         end
 
         update_code_signing_settings(
             path: "Runner.xcodeproj",
