@@ -83,10 +83,10 @@ platform:ios do
             xcargs: " build-for-testing"
         )
 #         sh("xcodebuild -workspace ../Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath build/ios_integ -sdk iphoneos build-for-testing")
-        sh("cd build/ios_integ/Build/Products/; ls -la")
+        sh("cd /Users/builder/clone/ios/build/ios_integ/Build/Products/; ls -la")
         # zip file
-        sh('cd build/ios_integ/Build/Products/; zip -r "ios_tests.zip" "Release-iphoneos" "Runner_iphoneos15.5-arm64.xctestrun"')
-        sh("cd build/ios_integ/Build/Products/; ls -la")
+        sh('cd /Users/builder/clone/ios/build/ios_integ/Build/Products/; zip -r "ios_tests.zip" "Release-iphoneos" "Runner_iphoneos15.5-arm64.xctestrun"')
+        sh("cd /Users/builder/clone/ios/build/ios_integ/Build/Products/; ls -la")
         sh("ls -la")
 
         # upload to firebase test lab
