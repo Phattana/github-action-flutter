@@ -77,10 +77,10 @@ platform:ios do
         xcodebuild(
             workspace: "Runner.xcworkspace",
             scheme: "Runner",
-            config: "Flutter/Release.xcconfig",
+            xcconfig: "Flutter/Release.xcconfig",
             derivedDataPath: "build/ios_integ",
             sdk: "iphoneos",
-            xcargs: " build-for-testing"
+            xcargs: "build-for-testing"
         )
 #         sh("xcodebuild -workspace ../Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath build/ios_integ -sdk iphoneos build-for-testing")
         sh("cd /Users/builder/clone/ios/build/ios_integ/Build/Products/; ls -la")
