@@ -74,23 +74,23 @@ platform:ios do
             team_id: ENV["APPLE_TEAM_ID"],
             code_sign_identity:  "Apple Development",
         )
-        xcodebuild(
-            workspace: "Runner.xcworkspace",
-            scheme: "Runner",
-            xcconfig: "Flutter/Release.xcconfig",
-            derivedDataPath: "build/ios_integ",
-            sdk: "iphoneos",
-            xcargs: "build-for-testing"
-        )
-#         sh("xcodebuild -workspace ../Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath build/ios_integ -sdk iphoneos build-for-testing")
+#         xcodebuild(
+#             workspace: "Runner.xcworkspace",
+#             scheme: "Runner",
+#             xcconfig: "Flutter/Release.xcconfig",
+#             derivedDataPath: "build/ios_integ",
+#             sdk: "iphoneos",
+#             xcargs: "build-for-testing"
+#         )
+        sh("xcodebuild -workspace ../Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath build/ios_integ -sdk iphoneos build-for-testing")
         sh("cd /Users/builder/clone/ios/build/ios_integ/Build/Products/; ls -la")
         # zip file
-        sh('cd /Users/builder/clone/ios/build/ios_integ/Build/Products/; zip -r "ios_tests.zip" "Debug-iphoneos" "Runner_iphoneos15.5-arm64.xctestrun"')
+        sh('cd /Users/builder/clone/ios/build/ios_integ/Build/Products/; zip -r "ios_tests.zip" "Release-iphoneos" "Runner_iphoneos15.5-arm64.xctestrun"')
         sh("cd /Users/builder/clone/ios/build/ios_integ/Build/Products/; ls -la")
         sh("ls -la")
 
         # upload to firebase test lab
-        sh("gcloud firebase test ios run --type=xctest --test=/Users/builder/clone/ios/build/ios_integ/Build/Products/ios_tests.zip --device=model=ipad5,version=15.4,locale=en,orientation=portrait --xcode-version=13.3.1 --timeout 10m")
+        sh("gcloud firebase test ios run --type=xctest --test=build/ios_integ/Build/Products/ios_tests.zip --device=model=ipad5,version=15.4,locale=en,orientation=portrait --xcode-version=13.3.1 --timeout 10m")
     end
 
     desc "Run mobSF (upload file and scan file)"
