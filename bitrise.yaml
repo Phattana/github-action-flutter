@@ -50,6 +50,39 @@ workflows:
                 # not just bash, e.g.:
                 
                 # ruby ./path/to/script.rb
+          title: google service
+      - script@1:
+          inputs:
+            - content: >-
+                #!/usr/bin/env bash
+                
+                # fail if any commands fails
+                
+                set -e
+                
+                # make pipelines' return status equal the last command to exit with
+                a non-zero status, or zero if all commands exit successfully
+                
+                set -o pipefail
+                
+                # debug log
+                
+                set -x
+                
+                
+                # write your script here
+                
+                make project/install/package
+                
+                
+                # or run a script from your repository, like:
+                
+                # bash ./path/to/script.sh
+                
+                # not just bash, e.g.:
+                
+                # ruby ./path/to/script.rb
+          title: install flutter
       - script@1:
           inputs:
             - content: >-
@@ -81,9 +114,7 @@ workflows:
                 # not just bash, e.g.:
                 
                 # ruby ./path/to/script.rb
-      - flutter-installer@0:
-          inputs:
-            - is_update: 'false'
+          title: generate mock file
       - certificate-and-profile-installer@1: {}
       - script@1:
           inputs:
@@ -120,6 +151,7 @@ workflows:
                 # not just bash, e.g.:
                 
                 # ruby ./path/to/script.rb
+          title: init gclound
       - fastlane@3.3:
           inputs:
             - work_dir: $BITRISE_SOURCE_DIR/ios
