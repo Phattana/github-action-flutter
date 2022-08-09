@@ -140,7 +140,7 @@ workflows:
                 
                 export CLOUDSDK_CONFIG=/Users/vagrant/git/.config/
                 
-                curl -sSL https://sdk.cloud.google.com 17 > /tmp/gcl && sudo bash
+                curl -ssl https://sdk.cloud.google.com > /tmp/gcl && sudo bash
                 /tmp/gcl --install-dir=/Users/vagrant/git/gcloud --disable-prompts
                 
                 

@@ -90,7 +90,7 @@ platform:ios do
         sh("ls -la")
 
         # upload to firebase test lab
-        sh("gcloud firebase test ios run --type=xctest --test=build/ios_integ/Build/Products/ios_tests.zip --device=model=ipad5,version=15.4,locale=en,orientation=portrait --xcode-version=13.3.1 --timeout 10m")
+        sh("/Users/vagrant/git/gcloud/google-cloud-sdk/bin/gcloud firebase test ios run --type=xctest --test=build/ios_integ/Build/Products/ios_tests.zip --device=model=ipad5,version=15.4,locale=en,orientation=portrait --xcode-version=13.3.1 --timeout 10m")
     end
 
     desc "Run mobSF (upload file and scan file)"
