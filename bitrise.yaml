@@ -1,0 +1,143 @@
+---
+format_version: '11'
+default_step_lib_source: 'https://github.com/bitrise-io/bitrise-steplib.git'
+project_type: flutter
+workflows:
+  test_lab:
+    description: >
+      Builds project and runs tests.
+
+
+      Next steps:
+
+      - Check out [Getting started with Flutter
+      apps](https://devcenter.bitrise.io/en/getting-started/getting-started-with-flutter-apps.html).
+    steps:
+      - activate-ssh-key@4: {}
+      - git-clone@6: {}
+      - script@1:
+          inputs:
+            - content: >-
+                #!/usr/bin/env bash
+                
+                # fail if any commands fails
+                
+                set -e
+                
+                # make pipelines' return status equal the last command to exit with
+                a non-zero status, or zero if all commands exit successfully
+                
+                set -o pipefail
+                
+                # debug log
+                
+                set -x
+                
+                
+                # write your script here
+                
+                cd ios; cat << EOF >> GoogleService-Info.plist
+                
+                $GOOGLE_SERVICE_IOS
+                
+                EOF
+                
+                
+                # or run a script from your repository, like:
+                
+                # bash ./path/to/script.sh
+                
+                # not just bash, e.g.:
+                
+                # ruby ./path/to/script.rb
+      - script@1:
+          inputs:
+            - content: >-
+                #!/usr/bin/env bash
+                
+                # fail if any commands fails
+                
+                set -e
+                
+                # make pipelines' return status equal the last command to exit with
+                a non-zero status, or zero if all commands exit successfully
+                
+                set -o pipefail
+                
+                # debug log
+                
+                set -x
+                
+                
+                # write your script here
+                
+                make test/generate/mock-file
+                
+                
+                # or run a script from your repository, like:
+                
+                # bash ./path/to/script.sh
+                
+                # not just bash, e.g.:
+                
+                # ruby ./path/to/script.rb
+      - flutter-installer@0:
+          inputs:
+            - is_update: 'false'
+      - certificate-and-profile-installer@1: {}
+      - script@1:
+          inputs:
+            - content: >-
+                #!/usr/bin/env bash
+                
+                # fail if any commands fails
+                
+                set -e
+                
+                # make pipelines' return status equal the last command to exit with
+                a non-zero status, or zero if all commands exit successfully
+                
+                set -o pipefail
+                
+                # debug log
+                
+                set -x
+                
+                
+                # write your script here
+                
+                echo $GCLOUD_KEY > ./gcloud_key_file.json
+                
+                gcloud auth activate-service-account --key-file=gcloud_key_file.json
+                
+                gcloud --quiet config set project $FIREBASE_PROJECT_ID
+                
+                
+                # or run a script from your repository, like:
+                
+                # bash ./path/to/script.sh
+                
+                # not just bash, e.g.:
+                
+                # ruby ./path/to/script.rb
+      - fastlane@3.3:
+          inputs:
+            - work_dir: $BITRISE_SOURCE_DIR/ios
+            - connection: 'off'
+            - enable_cache: 'no'
+            - lane: test_lab
+      - cache-pull@2: {}
+      - cache-push@2: {}
+      - deploy-to-bitrise-io@2: {}
+meta:
+  bitrise.io:
+    stack: osx-xcode-13.4.x
+    machine_type_id: g2.4core
+app:
+  envs:
+    - opts:
+        is_expand: false
+      BITRISE_FLUTTER_PROJECT_LOCATION: .
+trigger_map:
+  - push_branch: '*'
+    workflow: test_lab
