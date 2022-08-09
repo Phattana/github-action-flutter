@@ -89,6 +89,9 @@ platform:ios do
         sh("cd build/ios_integ/Build/Products/; ls -la")
         sh("ls -la")
         sh("export CLOUDSDK_CONFIG=/Users/vagrant/git/.config/")
+        sh("echo $GCLOUD_KEY > ./gcloud_key_file.json")
+        sh("/Users/vagrant/git/gcloud/google-cloud-sdk/bin/gcloud auth activate-service-account -q --key-file=gcloud_key_file.json")
+        sh("/Users/vagrant/git/gcloud/google-cloud-sdk/bin/gcloud --quiet config set project $FIREBASE_PROJECT_ID")
         # upload to firebase test lab
         sh("/Users/vagrant/git/gcloud/google-cloud-sdk/bin/gcloud firebase test ios run --type=xctest --test=build/ios_integ/Build/Products/ios_tests.zip --device=model=ipad5,version=15.4,locale=en,orientation=portrait --xcode-version=13.3.1 --timeout 10m")
     end
