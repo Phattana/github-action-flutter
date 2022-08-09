@@ -51,6 +51,7 @@ workflows:
                 
                 # ruby ./path/to/script.rb
           title: google service
+      - flutter-installer@0: {}
       - script@1:
           inputs:
             - content: >-
