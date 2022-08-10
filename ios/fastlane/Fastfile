@@ -82,17 +82,15 @@ platform:ios do
 #             sdk: "iphoneos",
 #             xcargs: "build-for-testing"
 #         )
-        sh("xcodebuild -workspace ../Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath build/ios_integ -sdk iphoneos build-for-testing")
-        sh("cd build/ios_integ/Build/Products/; ls -la")
+        sh("xcodebuild -workspace ../Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath ./build/ios_integ -sdk iphoneos build-for-testing")
+        sh("cd ./build/ios_integ/Build/Products/; ls -la")
         # zip file
-        sh('cd build/ios_integ/Build/Products/; zip -r "ios_tests.zip" "Release-iphoneos" "Runner_iphoneos15.5-arm64.xctestrun"')
-        sh("cd build/ios_integ/Build/Products/; ls -la")
+        sh('cd ./build/ios_integ/Build/Products/; zip -r "ios_tests.zip" "Release-iphoneos" "Runner_iphoneos15.5-arm64.xctestrun"')
+        sh("cd ./build/ios_integ/Build/Products/; ls -la")
 #         sh("ls -la")
-        sh("export CLOUDSDK_CONFIG=/Users/vagrant/git/.config/")
-        sh("/Users/vagrant/git/gcloud/google-cloud-sdk/bin/gcloud config set account tee-hugeman@template-flutter-clean-a-26f0d.iam.gserviceaccount.com")
         # upload to firebase test lab
 #         sh("/Users/vagrant/git/gcloud/google-cloud-sdk/bin/gcloud auth list")
-        sh("/Users/vagrant/git/gcloud/google-cloud-sdk/bin/gcloud firebase test ios run --type=xctest --test=build/ios_integ/Build/Products/ios_tests.zip --device=model=ipad5,version=15.4,locale=en,orientation=portrait --xcode-version=13.3.1 --timeout 10m")
+#         sh("/Users/vagrant/git/gcloud/google-cloud-sdk/bin/gcloud firebase test ios run --type=xctest --test=build/ios_integ/Build/Products/ios_tests.zip --device=model=ipad5,version=15.4,locale=en,orientation=portrait --xcode-version=13.3.1 --timeout 10m")
     end
 
     desc "Run mobSF (upload file and scan file)"
