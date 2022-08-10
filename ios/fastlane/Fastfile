@@ -89,7 +89,7 @@ platform:ios do
         sh("cd build/ios_integ/Build/Products/; ls -la")
 #         sh("ls -la")
         sh("export CLOUDSDK_CONFIG=/Users/vagrant/git/.config/")
-        sh("/Users/vagrant/git/gcloud/google-cloud-sdk/bin/gcloud config set account $GCLOUD_ACCOUNT")
+        sh("/Users/vagrant/git/gcloud/google-cloud-sdk/bin/gcloud config set account tee-hugeman@template-flutter-clean-a-26f0d.iam.gserviceaccount.com")
         # upload to firebase test lab
 #         sh("/Users/vagrant/git/gcloud/google-cloud-sdk/bin/gcloud auth list")
         sh("/Users/vagrant/git/gcloud/google-cloud-sdk/bin/gcloud firebase test ios run --type=xctest --test=build/ios_integ/Build/Products/ios_tests.zip --device=model=ipad5,version=15.4,locale=en,orientation=portrait --xcode-version=13.3.1 --timeout 10m")
