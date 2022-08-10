@@ -101,18 +101,18 @@ platform:ios do
     # run this lane before deploy to firebase app distribute
     desc "Build file for deploy firebase app distribute"
     lane:build_file_for_app_distribution do
-        cocoapods(
-            clean_install: true,
-            podfile: "Podfile",
-            use_bundle_exec: false
-        )
+#         cocoapods(
+#             clean_install: true,
+#             podfile: "Podfile",
+#             use_bundle_exec: false
+#         )
 #         Dir.chdir("../") do
 #             sh("pod install")
 #         end
 
-        sh("security unlock-keychain -p #{ENV['KEYCHAIN_PASSWORD']} ~/Library/Keychains/cicd.keychain-db")
+#         sh("security unlock-keychain -p #{ENV['KEYCHAIN_PASSWORD']} ~/Library/Keychains/cicd.keychain-db")
 #         if is_ci
-            sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k #{ENV['KEYCHAIN_PASSWORD']} ~/Library/Keychains/cicd.keychain-db")
+#             sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k #{ENV['KEYCHAIN_PASSWORD']} ~/Library/Keychains/cicd.keychain-db")
 #         end
 
         update_code_signing_settings(
@@ -126,9 +126,9 @@ platform:ios do
         )
 
         sh("xcodebuild -workspace ../Runner.xcworkspace -scheme Runner -sdk iphoneos -configuration Release archive -archivePath ../build/Release.xcarchive")
-        sh("xcodebuild -exportArchive -archivePath ../build/Release.xcarchive -exportOptionsPlist ../exportOptions.plist -exportPath ../build/")
+        sh("xcodebuild -exportArchive -archivePath ../build/Release.xcarchive -exportOptionsPlist ../exportOptions.plist -exportPath ../../build/")
 
-        sh('export file=$(find ../build/ -name "*.ipa"); cp $file ../build/Runner.ipa')
+        sh('export file=$(find ../../build/ -name "*.ipa"); cp $file ../../build/Runner.ipa')
     end
 
     desc "Deploy app for testing (group developer, qa) to the Firebase App Distribute"
@@ -136,7 +136,7 @@ platform:ios do
         firebase_app_distribution(
             app: ENV["FASTLANE_FIREBASE_APP_DISTRIBUTE_ID_IOS"],
             groups: "developer, qa",
-            ipa_path: 'build/Runner.ipa',
+            ipa_path: '../../build/Runner.ipa',
             release_notes: "For testing on branch #{ENV["BRANCH_NAME"]}"
         )
     end
