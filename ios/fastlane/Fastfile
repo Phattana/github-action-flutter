@@ -56,9 +56,9 @@ platform:ios do
     # branch: all branch
     desc "Test ios in Firebase test lab"
     lane:test_lab do
-#         Dir.chdir("../") do
-#             sh("pod install")
-#         end
+        Dir.chdir("../") do
+            sh("pod install")
+        end
 
         # sh("security unlock-keychain -p #{ENV['KEYCHAIN_PASSWORD']} ~/Library/Keychains/cicd.keychain-db")
         # if is_ci
