@@ -134,10 +134,11 @@ platform:ios do
 
     desc "Deploy app for testing (group developer, qa) to the Firebase App Distribute"
     lane:app_distribution_group_developer_qa do
+        sh("cd app_distribution_group_developer_qa; ls -la")
         firebase_app_distribution(
             app: ENV["FASTLANE_FIREBASE_APP_DISTRIBUTE_ID_IOS"],
             groups: "developer, qa",
-            ipa_path: '../../build/Runner.ipa',
+            ipa_path: 'app_distribution_group_developer_qa/Runner.ipa',
             release_notes: "For testing on branch #{ENV["BRANCH_NAME"]}"
         )
     end
