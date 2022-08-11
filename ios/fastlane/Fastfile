@@ -167,7 +167,7 @@ platform:ios do
 
     desc "Build file .ipa for distribute"
     lane:build_file_for_distribution do
-        sh("cd ios; ls -la")
+        sh("cd ../; ls -la")
 #         cocoapods(
 #           clean_install: true,
 #           podfile: "Podfile",
