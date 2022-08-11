@@ -172,14 +172,15 @@ platform:ios do
 #           podfile: "Podfile",
 #           use_bundle_exec: false
 #         )
+        sh("flutter precache --ios")
         Dir.chdir("../") do
             sh("pod install")
         end
 
-        sh("security unlock-keychain -p #{ENV['KEYCHAIN_PASSWORD']} ~/Library/Keychains/cicd.keychain-db")
-#         if is_ci
-            sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k #{ENV['KEYCHAIN_PASSWORD']} ~/Library/Keychains/cicd.keychain-db")
-#         end
+#         sh("security unlock-keychain -p #{ENV['KEYCHAIN_PASSWORD']} ~/Library/Keychains/cicd.keychain-db")
+# #         if is_ci
+#             sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k #{ENV['KEYCHAIN_PASSWORD']} ~/Library/Keychains/cicd.keychain-db")
+# #         end
 
         update_code_signing_settings(
             path: "Runner.xcodeproj",
