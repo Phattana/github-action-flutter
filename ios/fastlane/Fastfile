@@ -1,10 +1,10 @@
 default_platform(:ios)
 
-# fastlane_require 'dotenv'
-#
-# before_all do
-#   Dotenv.overload '../../.env-cicd'
-# end
+fastlane_require 'dotenv'
+
+before_all do
+  Dotenv.overload '../../.env-cicd'
+end
 
 platform:ios do
     desc "Setup Certificate"
@@ -205,6 +205,7 @@ platform:ios do
             export_method: "app-store",
             export_team_id: ENV["APPLE_TEAM_ID"],
         )
+        sh("cd ../; ls -la")
     end
 
     # tag: master
