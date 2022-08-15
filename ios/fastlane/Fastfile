@@ -65,8 +65,8 @@ platform:ios do
         #     sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k #{ENV['KEYCHAIN_PASSWORD']} ~/Library/Keychains/cicd.keychain-db")
         # end
         # build file
-        sh("flutter build ios --config-only integration_test/main_integration_test.dart")
-        sh("flutter build ios integration_test/main_integration_test.dart --release")
+#         sh("flutter build ios --config-only integration_test/main_integration_test.dart")
+#         sh("flutter build ios integration_test/main_integration_test.dart --release")
         update_code_signing_settings(
             path: "Runner.xcodeproj",
             targets: "RunnerTests",
