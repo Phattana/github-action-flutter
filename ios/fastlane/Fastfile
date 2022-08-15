@@ -85,7 +85,7 @@ platform:ios do
         sh("xcodebuild -workspace ../Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath ../../build/ios_integ -sdk iphoneos build-for-testing")
         sh("cd ../../build/ios_integ/Build/Products/; ls -la")
         # zip file
-        sh('cd ../../build/ios_integ/Build/Products/; zip -r "ios_tests.zip" "Release-iphoneos" "Runner_iphoneos15.5-arm64.xctestrun"')
+        sh("cd ../../build/ios_integ/Build/Products/; zip -r ios_tests.zip .")
         sh("cd ../../build/ios_integ/Build/Products/; ls -la")
 #         sh("ls -la")
         # upload to firebase test lab
@@ -134,14 +134,12 @@ platform:ios do
 
     desc "Deploy app for testing (group developer, qa) to the Firebase App Distribute"
     lane:app_distribution_group_developer_qa do
-        sh("export CLOUDSDK_CONFIG=/Users/vagrant/git/.config/")
-        sh("/Users/vagrant/git/gcloud/google-cloud-sdk/bin/gcloud config set project template-flutter-clean-a-26f0d")
-        sh("cd /Users/vagrant/git/build; ls -la")
         firebase_app_distribution(
             app: ENV["FASTLANE_FIREBASE_APP_DISTRIBUTE_ID_IOS"],
             groups: "developer, qa",
-            ipa_path: '/Users/vagrant/git/build/Runner.ipa',
-            release_notes: "For testing on branch #{ENV["BRANCH_NAME"]}"
+            ipa_path: 'Runner.ipa',
+            release_notes: "For testing on branch #{ENV["BRANCH_NAME"]}",
+            service_credentials_file: "../../gcloud_key_file.json"
         )
     end
 
