@@ -231,6 +231,12 @@ platform:ios do
 
     desc "Test ios in Firebase test lab in bitrise"
     lane:bitrise_test_lab do
+        sh("flutter precache --ios")
+
+                Dir.chdir("../") do
+                    sh("pod install")
+                end
+
         sh("flutter build ios --config-only integration_test/main_integration_test.dart")
 
         sh("flutter build ios integration_test/main_integration_test.dart --release")
